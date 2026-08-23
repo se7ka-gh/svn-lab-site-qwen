@@ -1,97 +1,57 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>coder-app-name</title>
+    <title>SVN-LAB — Лаборатория кастомных корпусов | svn-lab.ru</title>
+    <meta name="description" content="SVN-LAB — лаборатория кастомных компьютерных корпусов. Уникальные корпуса ручной работы, тираж 1/1: дефектовка, подготовка, авторский эскиз, ручная роспись, автомобильный лак." />
+    <meta name="keywords" content="кастомный корпус, моддинг ПК, ручная роспись корпуса, кастомизация компьютера, SVN-LAB, корпус 1/1" />
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SVN-LAB" />
+    <meta property="og:title" content="SVN-LAB — Лаборатория кастомных корпусов" />
+    <meta property="og:description" content="Уникальные компьютерные корпуса. Ручная работа. Тираж 1/1." />
+    <meta property="og:url" content="https://svn-lab.ru/" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:image" content="https://image.qwenlm.ai/generated-images/db473847-5e8b-4ca4-83a8-b4532c8b5f75/_result.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SVN-LAB — Лаборатория кастомных корпусов" />
+    <meta name="twitter:description" content="Уникальные компьютерные корпуса. Ручная работа. Тираж 1/1." />
+    <meta name="twitter:site" content="@labsvn" />
+
+    <link rel="canonical" href="https://svn-lab.ru/" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Unbounded:wght@400;500;600;700;800;900&display=swap"
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <style>
-      /* 内联样式确保主题色立即生效，避免闪烁 */
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-      }
-      html.light,
-      html.light body {
-        background-color: #ffffff !important;
-        color: #000000;
-      }
-      html.dark,
-      html.dark body {
-        background-color: #1a1a1a !important;
-        color: #ffffff;
-      }
-    </style>
-    <script>
-      // 在 React 加载前立即设置主题，避免闪烁
-      (function () {
-        const isInIframe = window.self !== window.top;
 
-        function applyThemeToDOM(theme) {
-          document.documentElement.classList.remove("light", "dark");
-          document.documentElement.classList.add(theme);
-          document.documentElement.setAttribute("data-theme", theme);
-        }
-
-        if (isInIframe) {
-          // 监听父窗口主动推送的主题消息
-          window.addEventListener("message", function (event) {
-            if (event.data && typeof event.data.theme === "string") {
-              const theme = event.data.theme;
-              if (theme === "light" || theme === "dark") {
-                applyThemeToDOM(theme);
-              }
-            }
-          });
-        } else {
-          // 非 iframe 环境，使用默认 light 主题
-          applyThemeToDOM("light");
-        }
-      })();
-    </script>
-      <script>
-      (function () {
-        if (window.self === window.top) return;
-        var reported = {};
-        window.addEventListener("error", function (event) {
-          // 资源加载失败的 error 事件没有 message，此处仅上报 JS 运行时错误
-          if (!event || !event.message) return;
-          var key =
-            event.message + "|" + (event.filename || "") + "|" + (event.lineno || 0);
-          if (reported[key]) return; // 相同错误只上报一次，避免渲染循环刷屏
-          reported[key] = true;
-          try {
-            window.parent.postMessage(
-              {
-                type: "sandbox-runtime-error",
-                payload: {
-                  message: String(event.message).slice(0, 500),
-                  filename: event.filename || "",
-                  lineno: event.lineno || 0,
-                  colno: event.colno || 0,
-                  stack:
-                    event.error && event.error.stack
-                      ? String(event.error.stack).slice(0, 2000)
-                      : ""
-                }
-              },
-              "*"
-            );
-          } catch (e) {
-            /* 上报失败不影响页面运行 */
-          }
-        });
-      })();
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "SVN-LAB",
+        "url": "https://svn-lab.ru/",
+        "description": "Лаборатория кастомных компьютерных корпусов. Ручная роспись, тираж 1/1.",
+        "email": "lab@svn-lab.ru",
+        "sameAs": [
+          "https://t.me/svnintg",
+          "https://t.me/se7ka_svn",
+          "https://instagram.com/svn_lab",
+          "https://x.com/labsvn",
+          "https://youtube.com/@svn-lab",
+          "https://tiktok.com/@se7ka_",
+          "https://reddit.com/user/Firm-Chain-5041"
+        ]
+      }
     </script>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
