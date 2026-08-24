@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SVN-LAB CMS</title>
-    <!-- Подключаем CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  </head>
-  <body>
-    <!-- Контейнер, куда CMS встроится -->
-    <div id="nc-root"></div>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SVN-LAB CMS</title>
+</head>
+<body>
+  <!-- Сюда встроится админка. Этот div должен быть выше скрипта -->
+  <div id="nc-root"></div>
+  
+  <!-- Скрипт загружается в самом конце -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
 </html>
