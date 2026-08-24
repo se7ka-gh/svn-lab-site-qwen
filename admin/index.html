@@ -5,10 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>SVN-LAB — управление контентом</title>
+  
+  <!-- Подключаем Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <!-- Включаем ручную инициализацию для корректной работы с GitHub -->
+  <script>
+    window.CMS_MANUAL_INIT = true;
+  </script>
 </head>
 <body>
-  <!-- Decap CMS: веб-интерфейс для управления проектами.
-       Авторизация через GitHub (git-gateway / Netlify Identity). -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <!-- CMS загрузится сюда автоматически -->
 </body>
 </html>
