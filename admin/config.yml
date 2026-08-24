@@ -4,6 +4,7 @@ backend:
   name: github
   repo: se7ka-gh/svn-lab-site-qwen
   branch: main
+  auth_type: pkce
 
 media_folder: "images/projects"
 public_folder: "/images/projects"
