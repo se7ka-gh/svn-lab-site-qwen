@@ -1,7 +1,8 @@
 # Конфигурация Decap CMS для SVN-LAB
 # Авторизация: GitHub через git-gateway (Netlify Identity)
 backend:
-  name: git-gateway
+  name: github
+  repo: se7ka-gh/svn-lab-site-qwen
   branch: main
 
 media_folder: "images/projects"
