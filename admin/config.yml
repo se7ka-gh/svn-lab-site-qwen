@@ -1,10 +1,7 @@
-# Конфигурация Decap CMS для SVN-LAB
-# Авторизация: GitHub через git-gateway (Netlify Identity)
 backend:
   name: github
   repo: se7ka-gh/svn-lab-site-qwen
   branch: main
-  auth_type: pkce
 
 media_folder: "images/projects"
 public_folder: "/images/projects"
@@ -14,46 +11,11 @@ locale: "ru"
 collections:
   - name: "projects"
     label: "Проекты"
-    label_singular: "Проект"
     folder: "projects"
     create: true
-    slug: "{{slug}}"
-    summary: "{{name}} — {{status}}"
-    sortable_fields: ["created_at", "name"]
     fields:
-      - { label: "Название", name: "name", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string", pattern: ["^[a-z0-9-]+$", "Только латиница, цифры и дефис"] }
-      - label: "Статус"
-        name: "status"
-        widget: "select"
-        options:
-          - { label: "Готов", value: "ready" }
-          - { label: "В продаже", value: "forsale" }
-          - { label: "В работе", value: "inprogress" }
-      - { label: "Цена (₽, если в продаже)", name: "price", widget: "number", required: false, value_type: "int" }
-      - { label: "Прогресс (%, если в работе)", name: "progress", widget: "number", required: false, min: 0, max: 100 }
-      - { label: "Базовый корпус", name: "base", widget: "string" }
-      - { label: "Формат", name: "format", widget: "string", default: "ATX Mid-Tower" }
-      - { label: "Описание", name: "description", widget: "text" }
-      - label: "Концепция"
-        name: "concept"
-        widget: "markdown"
-        minimal: true
-      - label: "Материалы"
-        name: "materials"
-        widget: "list"
-        field: { label: "Материал", name: "item", widget: "string" }
-      - { label: "Часы росписи", name: "hours", widget: "number", value_type: "int" }
-      - { label: "Обложка", name: "cover", widget: "image", choose_url: true }
-      - label: "Галерея"
-        name: "gallery"
-        widget: "list"
-        required: false
-        field: { label: "Изображение", name: "image", widget: "image", choose_url: true }
-      - label: "Теги"
-        name: "tags"
-        widget: "list"
-        required: false
-        field: { label: "Тег", name: "tag", widget: "string" }
-      - { label: "Дата создания", name: "created_at", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Избранное (на главной)", name: "featured", widget: "boolean", default: false }
+      - {label: "Название", name: "name", widget: "string"}
+      - {label: "Статус", name: "status", widget: "select", options: ["ready", "forsale", "inprogress"]}
+      - {label: "Цена", name: "price", widget: "number", required: false}
+      - {label: "Описание", name: "description", widget: "text"}
+      - {label: "Обложка", name: "cover_image", widget: "image"}
