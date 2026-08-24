@@ -1,30 +1,27 @@
-export type ProjectStatus = "forsale" | "ready" | "inprogress";
+/* ============================================================
+   SVN-LAB — данные лаборатории и логика фильтров портфолио
+   Классический скрипт: константы видны в js/main.js.
+   ============================================================ */
 
-export interface Project {
-  slug: string;
-  name: string;
-  base: string;
-  format: string;
-  status: ProjectStatus;
-  price?: number;
-  progress?: number;
-  description: string;
-  concept: string;
-  materials: string[];
-  hours: number;
-  cover: string;
-  createdAt: string;
-  featured?: boolean;
-  tags: string[];
-}
-
-export const IMG = {
+const IMG = {
   hero: "https://image.qwenlm.ai/generated-images/db473847-5e8b-4ca4-83a8-b4532c8b5f75/_result.png",
+  oni: "https://image.qwenlm.ai/generated-images/d29ca867-068c-4136-9665-5f2190381f5b/_result.png",
+  circuit: "https://image.qwenlm.ai/generated-images/b5527909-02a0-4873-affa-ab69d0402faf/_result.png",
+  blueprint: "https://image.qwenlm.ai/generated-images/1fade3c0-1484-4912-802b-1b70a869cc61/_result.png",
+  nebula: "https://image.qwenlm.ai/generated-images/e89a2c04-7d67-4ee8-9024-54724a7fa707/_result.png",
+  flame: "https://image.qwenlm.ai/generated-images/383016a2-a0e4-4758-808a-791f59fffcb6/_result.png",
   paint: "https://image.qwenlm.ai/generated-images/cf9ecf0c-22f4-4632-99e7-b0b33f0a1846/_result.png",
   sketch: "https://image.qwenlm.ai/generated-images/24d29cee-4fef-4b1c-a92c-bf5765400167/_result.png",
 };
 
-export const PROJECTS: Project[] = [
+/* статусы: ready = «Готов», forsale = «В продаже», inprogress = «В работе» */
+const STATUS_META = {
+  forsale: { label: "В продаже", cls: "badge-forsale" },
+  ready: { label: "Готов", cls: "badge-ready" },
+  inprogress: { label: "В работе", cls: "badge-inprogress" },
+};
+
+const PROJECTS = [
   {
     slug: "cougar-dust-2-knight",
     name: "COUGAR DUST 2: KNIGHT",
@@ -64,7 +61,7 @@ export const PROJECTS: Project[] = [
       "2 слоя лака + матовый финиш",
     ],
     hours: 38,
-    cover: "https://image.qwenlm.ai/generated-images/d29ca867-068c-4136-9665-5f2190381f5b/_result.png",
+    cover: IMG.oni,
     createdAt: "2026-01-28T00:00:00Z",
     featured: true,
     tags: ["япония", "они", "гравюра", "красный / золото"],
@@ -87,7 +84,7 @@ export const PROJECTS: Project[] = [
       "Глянцевый автолак, 3 слоя",
     ],
     hours: 52,
-    cover: "https://image.qwenlm.ai/generated-images/b5527909-02a0-4873-affa-ab69d0402faf/_result.png",
+    cover: IMG.circuit,
     createdAt: "2025-11-20T00:00:00Z",
     featured: true,
     tags: ["киберпанк", "микросхема", "УФ-свечение", "циан"],
@@ -101,14 +98,14 @@ export const PROJECTS: Project[] = [
     description:
       "Корпус как инженерный чертёж: белые технические линии, размерные выноски и разрезы на графитовом металле.",
     concept:
-      "Эксперимент в духе производственной документации: корпус «разобран» белым лайнером прямо по собственной поверхности. Разрез фронтальной панели, выноска к каждому винту, допуски и посадочные размеры — всё нарисовано вручную и выверено по реальной геометрии корпуса.\n\nЭто самый «тихий» проект лаборатории: монохром, дисциплина линии и ни одного лишнего штриха. Чертовое колесо в углу боковины — отсылка к кульману, на котором делались первые эскизы.",
+      "Эксперимент в духе производственной документации: корпус «разобран» белым лайнером прямо по собственной поверхности. Разрез фронтальной панели, выноска к каждому винту, допуски и посадочные размеры — всё нарисовано вручную и выверено по реальной геометрии корпуса.\n\nЭто самый «тихий» проект лаборатории: монохром, дисциплина линии и ни одного лишнего штриха. Чертёжное колесо в углу боковины — отсылка к кульману, на котором делались первые эскизы.",
     materials: [
       "Белые перманентные лайнеры",
       "Чертёжный шаблон и линейки",
       "Матовый лак, 2 слоя",
     ],
     hours: 41,
-    cover: "https://image.qwenlm.ai/generated-images/1fade3c0-1484-4912-802b-1b70a869cc61/_result.png",
+    cover: IMG.blueprint,
     createdAt: "2025-09-04T00:00:00Z",
     featured: true,
     tags: ["чертёж", "монохром", "инженерия", "графит / белый"],
@@ -130,7 +127,7 @@ export const PROJECTS: Project[] = [
       "Выкрасы-свидетели на пластине",
     ],
     hours: 14,
-    cover: "https://image.qwenlm.ai/generated-images/e89a2c04-7d67-4ee8-9024-54724a7fa707/_result.png",
+    cover: IMG.nebula,
     createdAt: "2026-04-02T00:00:00Z",
     tags: ["космос", "аэрограф", "в процессе"],
   },
@@ -151,96 +148,115 @@ export const PROJECTS: Project[] = [
       "3 слоя лака, шлифовка, полировка",
     ],
     hours: 29,
-    cover: "https://image.qwenlm.ai/generated-images/383016a2-a0e4-4758-808a-791f59fffcb6/_result.png",
+    cover: IMG.flame,
     createdAt: "2025-07-19T00:00:00Z",
     tags: ["пламя", "хот-род", "пинстрайпинг", "глянец"],
   },
 ];
 
-export const STATUS_META: Record<
-  ProjectStatus,
-  { label: string; color: string; bg: string; border: string }
-> = {
-  forsale: { label: "В продаже", color: "#ff3e00", bg: "rgba(255,62,0,0.12)", border: "rgba(255,62,0,0.5)" },
-  ready: { label: "Готов", color: "#00d9ff", bg: "rgba(0,217,255,0.1)", border: "rgba(0,217,255,0.45)" },
-  inprogress: { label: "В работе", color: "#e0e0e0", bg: "rgba(224,224,224,0.08)", border: "rgba(224,224,224,0.35)" },
-};
-
-export const SOCIALS = [
-  { id: "tg-channel", label: "Telegram-канал", handle: "@svnintg", url: "https://t.me/svnintg", primary: true },
-  { id: "tg-dm", label: "Telegram (ЛС)", handle: "@se7ka_svn", url: "https://t.me/se7ka_svn", primary: true },
-  { id: "instagram", label: "Instagram", handle: "@svn_lab", url: "https://instagram.com/svn_lab" },
-  { id: "x", label: "X / Twitter", handle: "@labsvn", url: "https://x.com/labsvn" },
-  { id: "youtube", label: "YouTube", handle: "@svn-lab", url: "https://youtube.com/@svn-lab" },
-  { id: "tiktok", label: "TikTok", handle: "@se7ka_", url: "https://tiktok.com/@se7ka_" },
-  { id: "reddit", label: "Reddit", handle: "u/Firm-Chain-5041", url: "https://reddit.com/user/Firm-Chain-5041" },
-] as const;
-
-export const EMAIL = "lab@svn-lab.ru";
-export const TG_MAIN = "https://t.me/se7ka_svn";
-export const TG_CHANNEL = "https://t.me/svnintg";
-
-export function formatPrice(value: number): string {
-  return value.toLocaleString("ru-RU") + " ₽";
-}
-
-export function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString("ru-RU", { year: "numeric", month: "long" });
-}
-
-export function getBySlug(slug: string): Project | undefined {
-  return PROJECTS.find((p) => p.slug === slug);
-}
-
-export function projectIndex(p: Project): string {
-  const i = PROJECTS.indexOf(p);
-  return String(i + 1).padStart(2, "0");
-}
-
-export const PROCESS_STAGES = [
+const PROCESS_STAGES = [
   {
     id: "defect",
     num: "01",
     title: "Дефектовка",
     lead: "Корпус разбирается до винта.",
-    text: "Полная разборка, ревизия каждого элемента: царапины, вмятины, следы коррозии и усталости пластика фиксируются в чек-лист. Снимаются все комплектующие, оценивается геометрия панелей. На этом же этапе согласовывается, что остаётся заводским, а что уходит под роспись.",
-    tools: ["Чек-лист на 40+ пунктов", "Разборка до каркаса", "Фотофиксация"],
+    text: "Полная разборка, ревизия каждого элемента: царапины, вмятины, следы коррозии и усталости пластика фиксируются в чек-лист. Снимаются все комплектующие, оценивается геометрия панелей. На этом же этапе определяется, какие техники применимы к конкретному корпусу — роспись, винилография, гравировка или физическая модификация.",
+    tools: ["Чек-лист на 40+ пунктов", "Разборка до каркаса", "Фотофиксация", "Оценка применимых техник"],
     metric: "≈ 2 часа",
+    img: null,
   },
   {
     id: "prepare",
     num: "02",
     title: "Подготовка",
-    lead: "Металл готовится принять краску.",
-    text: "Шлифовка в три градации абразива, обеспыливание и обезжиривание, затем грунт по металлу. Поверхность доводится до состояния, на котором маркер ложится ровно и не «плывёт». Подготовка — 60% долговечности росписи, поэтому на неё не экономим время.",
-    tools: ["Абразивы P400–P1200", "Обезжириватель", "Автомобильный грунт"],
+    lead: "Поверхность готовится к работе.",
+    text: "Шлифовка в несколько градаций абразива, обеспыливание и обезжиривание, затем грунт по металлу. Для винилографии поверхность доводится до идеальной гладкости, для росписи — создаётся адгезионный слой, для гравировки — размечаются зоны реза. Подготовка — 60% долговечности результата, поэтому на неё не экономим время.",
+    tools: ["Абразивы P400–P1200", "Обезжириватель", "Автомобильный грунт", "Разметка зон под разные техники"],
     metric: "≈ 1 день",
+    img: null,
   },
   {
     id: "sketch",
     num: "03",
     title: "Эскиз",
     lead: "Идея превращается в чертёж.",
-    text: "Авторский эскиз рисуется на бумаге в масштабе реальных панелей, затем переносится на корпус: компоновка, оси, ключевые элементы. Эскиз согласовывается с заказчиком — правки вносятся до первого прикосновения маркера к металлу.",
-    tools: ["Карандаш и лайнеры", "Масштаб 1:1", "Согласование с заказчиком"],
+    text: "Авторский эскиз создаётся с учётом выбранной техники: для росписи — рисунок в масштабе реальных панелей, для винилографии — векторный макет с контурами реза, для декоративных элементов — 3D-модель или технический чертёж. Всё согласовывается с заказчиком до первого физического вмешательства в корпус.",
+    tools: ["Карандаш, лайнеры, графический планшет", "Векторные макеты (для винила)", "Масштаб 1:1", "Согласование с заказчиком"],
     metric: "1–3 дня",
+    img: { src: IMG.sketch, alt: "Эскизы кастомного корпуса карандашом на бумаге", label: "эскизы в масштабе 1:1" },
   },
   {
     id: "paint",
     num: "04",
-    title: "Роспись",
-    lead: "Ручная работа по металлу.",
-    text: "Маркеры, лайнеры, кисти, аэрограф — техника подбирается под задачу. Сначала контур, затем масса и световые акценты. Каждый слой сохнет между проходами; работа идёт по секциям, от общего к частному. Это самая длинная стадия — от 20 до 60 часов чистой росписи.",
-    tools: ["Molotow / Posca", "Лайнеры 0.1–1 мм", "Аэрограф для градиентов"],
-    metric: "20–60 часов",
+    title: "Воплощение",
+    lead: "Основная работа по корпусу.",
+    text: "Техника подбирается под задачу: ручная роспись маркерами и аэрографом, наклейка виниловой графики с точной подгонкой, гравировка роторным инструментом, установка кастомных декоративных элементов. Каждый слой сохнет между проходами; работа идёт по секциям, от общего к частному. Это самая длинная стадия — от 20 до 80 часов чистой работы.",
+    tools: ["Маркеры Molotow / Posca, аэрограф", "Виниловая плёнка, плоттерная резка", "Гравёр, насадки, гибкий вал", "Декоративные элементы ручной работы"],
+    metric: "20–80 часов",
+    img: { src: IMG.paint, alt: "Ручная роспись панели корпуса маркером", label: "воплощение: роспись по металлу" },
   },
   {
-    id: "lacquer",
+    id: "finish",
     num: "05",
-    title: "Лак",
-    lead: "Финиш, который переживёт годы.",
-    text: "Два-три слоя автомобильного лака с промежуточной сушкой, затем шлифовка 2000-м абразивом и полировка до нужной степени глянца. Лак защищает роспись от ультрафиолета, влаги и рук; корпус можно протирать, перевозить и показывать.",
-    tools: ["Автомобильный лак 2K", "Шлифовка P2000", "Полировка"],
+    title: "Сборка и финиш",
+    lead: "Финал, который переживёт годы.",
+    text: "Защитное покрытие (автомобильный лак для росписи, ламинирование для винила), шлифовка и полировка до нужной степени глянца. Установка всех декоративных элементов, финальная сборка корпуса, проверка креплений и геометрии. Корпус готов к транспортировке и использованию.",
+    tools: ["Автомобильный лак 2K / ламинат", "Шлифовка P2000, полировка", "Финальная сборка", "Контроль качества"],
     metric: "≈ 2 дня",
+    img: null,
   },
 ];
+
+const SOCIALS = [
+  { id: "tg-channel", label: "Telegram-канал", handle: "@svnintg", url: "https://t.me/svnintg" },
+  { id: "tg-dm", label: "Telegram (ЛС)", handle: "@se7ka_svn", url: "https://t.me/se7ka_svn" },
+  { id: "instagram", label: "Instagram", handle: "@svn_lab", url: "https://instagram.com/svn_lab" },
+  { id: "x", label: "X / Twitter", handle: "@labsvn", url: "https://x.com/labsvn" },
+  { id: "youtube", label: "YouTube", handle: "@svn-lab", url: "https://youtube.com/@svn-lab" },
+  { id: "tiktok", label: "TikTok", handle: "@se7ka_", url: "https://tiktok.com/@se7ka_" },
+  { id: "reddit", label: "Reddit", handle: "u/Firm-Chain-5041", url: "https://reddit.com/user/Firm-Chain-5041" },
+];
+
+const EMAIL = "lab@svn-lab.ru";
+const TG_MAIN = "https://t.me/se7ka_svn";
+const TG_CHANNEL = "https://t.me/svnintg";
+
+const BUDGETS = ["до 10 000 ₽", "10 000 — 20 000 ₽", "20 000 — 30 000 ₽", "30 000 ₽ +"];
+
+/* ---------- хелперы ---------- */
+
+function formatPrice(value) {
+  return value.toLocaleString("ru-RU") + " ₽";
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString("ru-RU", { year: "numeric", month: "long" });
+}
+
+function getBySlug(slug) {
+  return PROJECTS.find((p) => p.slug === slug);
+}
+
+function projectIndex(p) {
+  return String(PROJECTS.indexOf(p) + 1).padStart(2, "0");
+}
+
+/* ---------- фильтры портфолио ---------- */
+
+const FILTERS = [
+  { id: "all", label: "Все" },
+  { id: "ready", label: "Готов" },
+  { id: "forsale", label: "В продаже" },
+  { id: "inprogress", label: "В работе" },
+];
+
+function countsByStatus() {
+  const counts = { all: PROJECTS.length, ready: 0, forsale: 0, inprogress: 0 };
+  PROJECTS.forEach((p) => { counts[p.status] += 1; });
+  return counts;
+}
+
+function applyFilter(status) {
+  if (status === "all") return PROJECTS;
+  return PROJECTS.filter((p) => p.status === status);
+}
