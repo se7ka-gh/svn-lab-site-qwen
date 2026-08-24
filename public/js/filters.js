@@ -68,10 +68,19 @@ function normalizeProject(raw, i) {
 }
 
 /* Асинхронная загрузка: fetch → парсинг JSON → PROJECTS.
-   Вызывается в main.js ДО первого рендера (await loadProjects()). */
+   Вызывается в main.js ДО первого рендера (await loadProjects()).
+   Таймаут 6 секунд: если сеть легла, сайт всё равно отрисуется
+   с блоком ошибки, а не зависнет белым экраном. */
+const LOAD_TIMEOUT_MS = 6000;
+
 async function loadProjects() {
+  const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+  const timer = controller ? setTimeout(function () { controller.abort(); }, LOAD_TIMEOUT_MS) : null;
   try {
-    const res = await fetch(PROJECTS_URL, { cache: "no-cache" });
+    const res = await fetch(PROJECTS_URL, {
+      cache: "no-cache",
+      signal: controller ? controller.signal : undefined,
+    });
     if (!res.ok) throw new Error("HTTP " + res.status + " (" + PROJECTS_URL + ")");
 
     const data = await res.json();
@@ -83,6 +92,9 @@ async function loadProjects() {
 
     PROJECTS = list.map(normalizeProject);
   } catch (err) {
+    if (err && err.name === "AbortError") {
+      err = new Error("таймаут загрузки (" + LOAD_TIMEOUT_MS / 1000 + " с)");
+    }
     dataError = err;
     PROJECTS = [];
     console.error("[SVN-LAB] Не удалось загрузить " + PROJECTS_URL + ":", err);
@@ -98,6 +110,8 @@ async function loadProjects() {
         "отдан с кодом 200 и содержит валидный JSON."
       );
     }
+  } finally {
+    if (timer) clearTimeout(timer);
   }
 }
 

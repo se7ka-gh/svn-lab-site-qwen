@@ -28,14 +28,78 @@ const PROJECTS = [
   // Данные теперь загружаются из JSON-файла
 let PROJECTS = [];
 
+/* Сюда попадает ошибка загрузки — main.js показывает её на странице. */
+let dataError = null;
+
+/* Приводит «сырой» объект из JSON к форме, которую ожидает сайт.
+   Прощает отсутствующие необязательные поля и альтернативные ключи
+   (cover_image / created_at — из Decap CMS). */
+function normalizeProject(raw, i) {
+  const status = STATUS_META[raw.status] ? raw.status : "ready";
+  return {
+    slug: raw.slug || "project-" + (i + 1),
+    name: raw.name || "Без названия",
+    base: raw.base || "—",
+    format: raw.format || "—",
+    status: status,
+    price: typeof raw.price === "number" ? raw.price : null,
+    progress: typeof raw.progress === "number" ? raw.progress : 0,
+    description: raw.description || "",
+    concept: raw.concept || raw.description || "",
+    materials: Array.isArray(raw.materials) ? raw.materials : [],
+    hours: typeof raw.hours === "number" ? raw.hours : 0,
+    cover: raw.cover || raw.cover_image || "",
+    createdAt: raw.createdAt || raw.created_at || new Date().toISOString(),
+    featured: !!raw.featured,
+    tags: Array.isArray(raw.tags) ? raw.tags : [],
+  };
+}
+
+/* Асинхронная загрузка: fetch → парсинг JSON → PROJECTS.
+   Вызывается в main.js ДО первого рендера (await loadProjects()).
+   Таймаут 6 секунд: если сеть легла, сайт всё равно отрисуется
+   с блоком ошибки, а не зависнет белым экраном. */
+const LOAD_TIMEOUT_MS = 6000;
+
 async function loadProjects() {
+  const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+  const timer = controller ? setTimeout(function () { controller.abort(); }, LOAD_TIMEOUT_MS) : null;
   try {
-    const response = await fetch('/data/projects.json');
-    PROJECTS = await response.json();
-    // Если на странице есть функция рендера, вызови её здесь, например: renderPortfolio();
-    console.log("Проекты загружены:", PROJECTS);
-  } catch (error) {
-    console.error("Ошибка загрузки проектов:", error);
+    const res = await fetch(PROJECTS_URL, {
+      cache: "no-cache",
+      signal: controller ? controller.signal : undefined,
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status + " (" + PROJECTS_URL + ")");
+
+    const data = await res.json();
+    /* Принимаем и «голый» массив, и объект вида { "projects": [...] } */
+    const list = Array.isArray(data) ? data : data && data.projects;
+    if (!Array.isArray(list)) {
+      throw new Error("неверная структура JSON: ожидается массив проектов");
+    }
+
+    PROJECTS = list.map(normalizeProject);
+  } catch (err) {
+    if (err && err.name === "AbortError") {
+      err = new Error("таймаут загрузки (" + LOAD_TIMEOUT_MS / 1000 + " с)");
+    }
+    dataError = err;
+    PROJECTS = [];
+    console.error("[SVN-LAB] Не удалось загрузить " + PROJECTS_URL + ":", err);
+    if (location.protocol === "file:") {
+      console.info(
+        "[SVN-LAB] Сайт открыт через file:// — fetch здесь запрещён браузером. " +
+        "Запустите локальный сервер: npx serve . (или python3 -m http.server) " +
+        "и откройте http://localhost:3000"
+      );
+    } else {
+      console.info(
+        "[SVN-LAB] Проверьте, что файл data/projects.json существует, " +
+        "отдан с кодом 200 и содержит валидный JSON."
+      );
+    }
+  } finally {
+    if (timer) clearTimeout(timer);
   }
 }
 

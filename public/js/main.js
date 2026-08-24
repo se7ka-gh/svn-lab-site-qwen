@@ -99,7 +99,11 @@ function projectCard(p, delay = 0) {
    ============================================================ */
 
 function pageHome() {
-  const feats = PROJECTS.filter((p) => p.featured);
+  /* избранные работы; если флаг featured нигде не стоит — берём первые четыре.
+     Если данные не загрузились — секцию не рисуем вовсе. */
+  const flagged = PROJECTS.filter((p) => p.featured);
+  const feats = flagged.length ? flagged : PROJECTS.slice(0, 4);
+  const hasProjects = feats.length > 0;
 
   document.title = "SVN-LAB — Лаборатория кастомных корпусов | svn-lab.ru";
 
@@ -230,7 +234,8 @@ function pageHome() {
     </div>
   </section>`;
 
-  const featured = `
+  const featured = hasProjects
+    ? `
   <section class="section section-alt">
     <div class="container section-pad">
       ${secHead(
@@ -243,7 +248,8 @@ function pageHome() {
         ${feats.map((p, i) => projectCard(p, (i % 2) * 110)).join("")}
       </div>
     </div>
-  </section>`;
+  </section>`
+    : "";
 
   const process = `
   <section class="section">
@@ -328,7 +334,10 @@ function pagePortfolio() {
   </section>`;
 
   const counts = countsByStatus();
-  const filters = `
+  /* нет данных — панель фильтров не показываем: без проектов её кнопки мертвы */
+  const filters =
+    !dataError && PROJECTS.length > 0
+      ? `
   <div class="filters-bar">
     <div class="container filters-row" role="group" aria-label="Фильтр проектов по статусу">
       <span class="filters-label">Фильтр:</span>
@@ -340,7 +349,8 @@ function pagePortfolio() {
       ).join("")}
       <span class="filters-count" id="filters-count">показано: ${PROJECTS.length} / ${PROJECTS.length}</span>
     </div>
-  </div>`;
+  </div>`
+      : "";
 
   const grid = `
   <section>
