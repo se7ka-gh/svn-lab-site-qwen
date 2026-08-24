@@ -19,6 +19,7 @@
 │   └── main.js                    # роутер, рендер страниц, эффекты
 ├── images/projects/               # фотографии корпусов (добавляются через CMS)
 ├── projects/                      # *.md файлы проектов (создаёт Decap CMS)
+├── public/js/                     # зеркала корневых js/* для dist-сборки (vite)
 ├── index.html                     # единая точка входа
 ├── CNAME                          # svn-lab.ru
 └── README.md
