@@ -217,5 +217,29 @@
   <!-- Классические скрипты: работают на GitHub Pages и при открытии файла напрямую -->
   <script src="./js/filters.js"></script>
   <script src="./js/main.js"></script>
+
+  <!-- Страховка: если через 3 секунды приложение не отрисовалось
+       (скрипты не загрузились или упали) — показываем диагностику
+       вместо пустой страницы. При успешном рендере main.js ставит
+       window.__SVN_RENDERED, и блок не появляется. -->
+  <script>
+    setTimeout(function () {
+      if (window.__SVN_RENDERED) return;
+      var app = document.getElementById("app");
+      if (!app || app.querySelector("section, .data-error")) return;
+      app.innerHTML =
+        '<div style="max-width:640px;margin:48px auto;padding:30px 28px;border:1px solid rgba(255,62,0,.5);background:#121212;position:relative">' +
+        '<p style="font-family:JetBrains Mono,monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#9b9b9b">' +
+        '<span style="color:#ff3e00">[ SYS.ERR ]</span> интерфейс не запустился</p>' +
+        '<h1 style="margin-top:12px;font-family:Unbounded,sans-serif;font-size:22px;text-transform:uppercase;color:#fff">Сайт не смог отрисоваться</h1>' +
+        '<p style="margin-top:12px;font-size:14px;line-height:1.65;color:#9b9b9b">' +
+        'Скрипты или данные не загрузились. Обновите страницу; если не поможет — ' +
+        'проверьте консоль браузера (F12 → Console). Локально открывайте сайт через HTTP-сервер: <b style="color:#00d9ff;font-weight:400">npx serve .</b></p>' +
+        '<div style="margin-top:22px;display:flex;flex-wrap:wrap;gap:12px">' +
+        '<button onclick="location.reload()" style="min-height:44px;padding:13px 26px;background:#ff3e00;color:#0a0a0a;border:0;font-family:JetBrains Mono,monospace;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;cursor:pointer">Обновить страницу</button>' +
+        '<a href="https://t.me/se7ka_svn" target="_blank" rel="noopener noreferrer" style="min-height:44px;padding:13px 26px;display:inline-flex;align-items:center;border:1px solid #383838;color:#e0e0e0;font-family:JetBrains Mono,monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none">Написать в Telegram</a>' +
+        '</div></div>';
+    }, 3000);
+  </script>
 </body>
 </html>

@@ -1166,6 +1166,7 @@ function updateNav(route) {
 }
 
 function render() {
+  window.__SVN_RENDERED = true; /* страховка в index.html знает: JS жив */
   processObservers.forEach((io) => io.disconnect());
   processObservers.length = 0;
 
@@ -1227,12 +1228,30 @@ function initShell() {
 
 /* Данные проектов лежат в data/projects.json и загружаются асинхронно,
    поэтому первый рендер ждёт loadProjects(). Все последующие переходы
-   (hashchange) рендерятся синхронно — массив уже в памяти. */
+   (hashchange) рендерятся синхронно — массив уже в памяти.
+
+   Каждая стадия обёрнута в try/catch: сайт обязан отрисоваться
+   даже при частичном сбое — белых страниц быть не должно. */
 async function init() {
-  initShell();
-  initCanvasGrid();
-  await loadProjects();
-  render();
+  try {
+    initShell();
+    initCanvasGrid();
+  } catch (err) {
+    console.error("[SVN-LAB] сбой инициализации оболочки:", err);
+  }
+
+  await loadProjects(); /* ошибки ловит сама, наружу не бросает */
+
+  try {
+    render();
+  } catch (err) {
+    console.error("[SVN-LAB] сбой рендеринга:", err);
+    if (app) {
+      dataError = dataError || err;
+      app.innerHTML =
+        `<div class="container portfolio-pad">` + dataErrorBlock() + `</div>`;
+    }
+  }
   window.addEventListener("hashchange", render);
 }
 init();

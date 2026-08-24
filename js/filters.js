@@ -103,10 +103,6 @@ async function loadProjects() {
   }
 }
 
-// Вызываем загрузку при старте
-loadProjects();
-];
-
 const PROCESS_STAGES = [
   {
     id: "defect",
