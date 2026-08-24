@@ -4,6 +4,45 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SVN-LAB CMS</title>
+  
+  <!-- ОТКЛЮЧАЕМ АВТООБНАРУЖЕНИЕ NETLIFY -->
+  <script>
+    window.CMS_ENV = 'git-gateway';
+    window.CMS_MANUAL_INIT = true;
+    
+    // ЯВНАЯ КОНФИГУРАЦИЯ - НИКАКОГО NETLIFY
+    window.CMS_CONFIG = {
+      backend: {
+        name: 'github',
+        repo: 'se7ka-gh/svn-lab-site-qwen',
+        branch: 'main',
+        auth_scope: 'repo',
+        auth_type: 'pkce'
+      },
+      site_url: 'https://svn-lab.ru',
+      display_url: 'https://svn-lab.ru',
+      media_folder: 'images/projects',
+      public_folder: '/images/projects',
+      load_config_file: false,  ← ВАЖНО! Не читать config.yml
+      collections: [
+        {
+          name: 'projects',
+          label: 'Проекты',
+          folder: 'projects',
+          create: true,
+          extension: 'md',
+          format: 'frontmatter',
+          fields: [
+            { label: 'Название', name: 'name', widget: 'string' },
+            { label: 'Статус', name: 'status', widget: 'select', options: ['ready', 'forsale', 'inprogress'] },
+            { label: 'Цена', name: 'price', widget: 'number', required: false },
+            { label: 'Описание', name: 'description', widget: 'text' },
+            { label: 'Обложка', name: 'cover', widget: 'image', required: false }
+          ]
+        }
+      ]
+    };
+  </script>
 </head>
 <body>
   <div id="nc-root"></div>
