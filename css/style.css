@@ -1082,6 +1082,26 @@ ul { list-style: none; }
 
 .portfolio-pad { padding-top: 44px; padding-bottom: 60px; }
 
+/* ошибка загрузки data/projects.json */
+.data-error {
+  position: relative;
+  max-width: 640px;
+  border: 1px solid rgba(255, 62, 0, 0.5);
+  background: var(--panel);
+  padding: 30px 28px;
+}
+.data-error h2 {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  text-transform: uppercase;
+  color: var(--fog);
+}
+.data-error p { margin-top: 12px; font-size: 14px; line-height: 1.65; color: var(--dim); }
+.data-error b { color: var(--volt); font-family: var(--font-mono); font-weight: 400; }
+.data-error .btns { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 12px; }
+
 /* нижний блок портфолио */
 .pf-bottom { border-top: 1px solid var(--line); }
 .pf-bottom-grid {

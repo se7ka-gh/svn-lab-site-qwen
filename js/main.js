@@ -341,9 +341,13 @@ function pagePortfolio() {
   const grid = `
   <section>
     <div class="container portfolio-pad">
-      <div class="cards-grid cols-3" id="portfolio-grid">
-        ${PROJECTS.map((p, i) => projectCard(p, (i % 3) * 90)).join("")}
-      </div>
+      ${
+        dataError || PROJECTS.length === 0
+          ? dataErrorBlock()
+          : `<div class="cards-grid cols-3" id="portfolio-grid">
+              ${PROJECTS.map((p, i) => projectCard(p, (i % 3) * 90)).join("")}
+            </div>`
+      }
     </div>
   </section>`;
 
@@ -375,6 +379,27 @@ function pagePortfolio() {
   </section>`;
 
   return head + filters + grid + bottom;
+}
+
+/* Блок на случай, если data/projects.json не загрузился
+   (file://-открытие, 404, CORS или битый JSON). */
+function dataErrorBlock() {
+  const reason =
+    location.protocol === "file:"
+      ? "сайт открыт через file:// — браузер запрещает fetch с локального диска"
+      : "не удалось загрузить data/projects.json (404, CORS или невалидный JSON)";
+  return `
+  <div class="data-error reveal is-in">
+    ${corners()}
+    <p class="mono-tag"><span class="acc">[ SYS.ERR ]</span> данные не загружены</p>
+    <h2>Портфолио временно недоступно</h2>
+    <p>${esc(reason)}. Локально запустите сайт через HTTP-сервер — <b>npx serve .</b>
+       и откройте указанный адрес. На GitHub Pages данные подтягиваются автоматически.</p>
+    <div class="btns">
+      <a class="btn btn-ghost" href="#/">На главную</a>
+      <a class="btn btn-ember" href="${TG_MAIN}" target="_blank" rel="noopener noreferrer">${IC.tg} Написать в Telegram</a>
+    </div>
+  </div>`;
 }
 
 function bindPortfolio() {
@@ -1190,7 +1215,14 @@ function initShell() {
 
 /* ---------- старт ---------- */
 
-initShell();
-initCanvasGrid();
-render();
-window.addEventListener("hashchange", render);
+/* Данные проектов лежат в data/projects.json и загружаются асинхронно,
+   поэтому первый рендер ждёт loadProjects(). Все последующие переходы
+   (hashchange) рендерятся синхронно — массив уже в памяти. */
+async function init() {
+  initShell();
+  initCanvasGrid();
+  await loadProjects();
+  render();
+  window.addEventListener("hashchange", render);
+}
+init();
