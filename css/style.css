@@ -546,7 +546,7 @@ ul { list-style: none; }
   border: 1px solid var(--line);
   background: rgba(10, 10, 10, 0.6);
 }
-@media (min-width: 640px) { .data-strip { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 640px) { .data-strip { grid-template-columns: repeat(3, 1fr); } }
 .data-cell {
   padding: 14px 16px;
   border-top: 1px solid var(--line);

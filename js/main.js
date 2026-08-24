@@ -131,7 +131,6 @@ function pageHome() {
           ${[
             ["Тираж", "1:1"],
             ["Роспись", "Вручную"],
-            ["Лак", "3 слоя"],
             ["Очередь", "2 места"],
           ]
             .map(
@@ -202,7 +201,7 @@ function pageHome() {
         <div class="about-right">
           <p class="about-statement reveal" style="--d:.1s">
             Дефектовка <span class="a-e">→</span> подготовка <span class="a-e">→</span>
-            эскиз <span class="a-e">→</span> роспись <span class="a-e">→</span> лак.
+            эскиз <span class="a-e">→</span> воплощение <span class="a-e">→</span> сборка и финиш.
             Пять этапов, <span class="a-v">один экземпляр</span>, ноль компромиссов.
           </p>
           <div class="stat-grid reveal" style="--d:.2s">
@@ -587,7 +586,7 @@ function pageProcess() {
       <h1 class="page-title" data-scramble>ПРОЦЕСС</h1>
       <p class="page-lead reveal" style="--d:.15s">
         От серийной коробки до единственного экземпляра — пять обязательных этапов. Пропустить
-        нельзя ни один: подготовка и лак отвечают за долговечность, эскиз и роспись — за характер.
+        нельзя ни один: подготовка и финиш отвечают за долговечность, эскиз и воплощение — за характер.
         Суммарно корпус проводит в лаборатории от двух недель до полутора месяцев.
       </p>
     </div>
