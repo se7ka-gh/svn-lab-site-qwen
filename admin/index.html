@@ -4,6 +4,22 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SVN-LAB CMS</title>
+  
+  <!-- Принудительно отключаем автообнаружение Netlify -->
+  <script>
+    window.CMS_CONFIG = {
+      backend: {
+        name: 'github',
+        repo: 'se7ka-gh/svn-lab-site-qwen',
+        branch: 'main',
+        auth_scope: 'repo',
+        auth_type: 'pkce'
+      },
+      load_config_file: true,
+      site_url: 'https://svn-lab.ru',
+      display_url: 'https://svn-lab.ru'
+    };
+  </script>
 </head>
 <body>
   <div id="nc-root"></div>
