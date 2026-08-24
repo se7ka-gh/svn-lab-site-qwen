@@ -24,82 +24,24 @@ const STATUS_META = {
   inprogress: { label: "В работе", cls: "badge-inprogress" },
 };
 
-/* ============================================================
-   ЗАГРУЗКА ПРОЕКТОВ ИЗ JSON
-   ============================================================ */
-
-/* Относительный путь (без «/» в начале) — корректно работает и в корне
-   домена, и в подкаталоге GitHub Pages (username.github.io/repo). */
-const PROJECTS_URL = "data/projects.json";
-
-/* Массив заполняется в loadProjects(); let — чтобы его можно было
-   переприсвоить после загрузки. */
+const PROJECTS = [
+  // Данные теперь загружаются из JSON-файла
 let PROJECTS = [];
 
-/* Сюда попадает ошибка загрузки — main.js показывает её на странице. */
-let dataError = null;
-
-/* Приводит «сырой» объект из JSON к форме, которую ожидает сайт.
-   Прощает отсутствующие необязательные поля и альтернативные ключи
-   (cover_image / created_at — из Decap CMS). */
-function normalizeProject(raw, i) {
-  const status = STATUS_META[raw.status] ? raw.status : "ready";
-  return {
-    slug: raw.slug || "project-" + (i + 1),
-    name: raw.name || "Без названия",
-    base: raw.base || "—",
-    format: raw.format || "—",
-    status: status,
-    price: typeof raw.price === "number" ? raw.price : null,
-    progress: typeof raw.progress === "number" ? raw.progress : 0,
-    description: raw.description || "",
-    concept: raw.concept || raw.description || "",
-    materials: Array.isArray(raw.materials) ? raw.materials : [],
-    hours: typeof raw.hours === "number" ? raw.hours : 0,
-    cover: raw.cover || raw.cover_image || "",
-    createdAt: raw.createdAt || raw.created_at || new Date().toISOString(),
-    featured: !!raw.featured,
-    tags: Array.isArray(raw.tags) ? raw.tags : [],
-  };
-}
-
-/* Асинхронная загрузка: fetch → парсинг JSON → PROJECTS.
-   Вызывается в main.js ДО первого рендера (await loadProjects()). */
 async function loadProjects() {
   try {
-    const res = await fetch(PROJECTS_URL, { cache: "no-cache" });
-    if (!res.ok) throw new Error("HTTP " + res.status + " (" + PROJECTS_URL + ")");
-
-    const data = await res.json();
-    /* Принимаем и «голый» массив, и объект вида { "projects": [...] } */
-    const list = Array.isArray(data) ? data : data && data.projects;
-    if (!Array.isArray(list)) {
-      throw new Error("неверная структура JSON: ожидается массив проектов");
-    }
-
-    PROJECTS = list.map(normalizeProject);
-  } catch (err) {
-    dataError = err;
-    PROJECTS = [];
-    console.error("[SVN-LAB] Не удалось загрузить " + PROJECTS_URL + ":", err);
-    if (location.protocol === "file:") {
-      console.info(
-        "[SVN-LAB] Сайт открыт через file:// — fetch здесь запрещён браузером. " +
-        "Запустите локальный сервер: npx serve . (или python3 -m http.server) " +
-        "и откройте http://localhost:3000"
-      );
-    } else {
-      console.info(
-        "[SVN-LAB] Проверьте, что файл data/projects.json существует, " +
-        "отдан с кодом 200 и содержит валидный JSON."
-      );
-    }
+    const response = await fetch('/data/projects.json');
+    PROJECTS = await response.json();
+    // Если на странице есть функция рендера, вызови её здесь, например: renderPortfolio();
+    console.log("Проекты загружены:", PROJECTS);
+  } catch (error) {
+    console.error("Ошибка загрузки проектов:", error);
   }
 }
 
-/* ============================================================
-   ЭТАПЫ ПРОЦЕССА
-   ============================================================ */
+// Вызываем загрузку при старте
+loadProjects();
+];
 
 const PROCESS_STAGES = [
   {
