@@ -13,9 +13,12 @@ collections:
     label: "Проекты"
     folder: "projects"
     create: true
+    extension: md
+    format: frontmatter
     fields:
       - {label: "Название", name: "name", widget: "string"}
+      - {label: "Slug", name: "slug", widget: "string"}
       - {label: "Статус", name: "status", widget: "select", options: ["ready", "forsale", "inprogress"]}
       - {label: "Цена", name: "price", widget: "number", required: false}
       - {label: "Описание", name: "description", widget: "text"}
-      - {label: "Обложка", name: "cover_image", widget: "image"}
+      - {label: "Обложка", name: "cover", widget: "image", required: false}
