@@ -17,7 +17,7 @@
       "Автомобильный лак"
     ],
     "hours": 57,
-    "cover": "/images/projects/new-project-1787652551434.png",
+    "cover": "/images/projects/new-project_001-gal-1787661230631-0.png",
     "gallery": [
       "/images/projects/new-project_001-gal-1787661230631-0.png",
       "/images/projects/new-project_001-gal-1787661235855-1.png",
@@ -26,6 +26,17 @@
     ],
     "createdAt": "2026-08-25T09:56:45.932Z",
     "featured": false,
-    "tags": []
+    "tags": [
+      "индастриал",
+      "стрит-арт",
+      "граффити",
+      "doodle",
+      "чёрно-белый",
+      "манекен",
+      "цепи",
+      "провода",
+      "кибер-готика"
+    ],
+    "base": "COUGAR DUST 2"
   }
 ]
