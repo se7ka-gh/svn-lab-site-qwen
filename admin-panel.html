@@ -10,31 +10,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    :root{
-      --ink:#0a0a0a; --panel:#121212; --carbon:#1a1a1a;
-      --line:#232323; --line2:#383838;
-      --ember:#ff3e00; --volt:#00d9ff;
-      --fog:#fff; --smoke:#e0e0e0; --dim:#9b9b9b;
-      --fd:"Unbounded",sans-serif; --fb:"IBM Plex Sans",sans-serif; --fm:"JetBrains Mono",monospace;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    [hidden]{display:none!important}
+    :root{--ink:#0a0a0a;--panel:#121212;--carbon:#1a1a1a;--line:#232323;--line2:#383838;--ember:#ff3e00;--volt:#00d9ff;--fog:#fff;--smoke:#e0e0e0;--dim:#9b9b9b;--fd:"Unbounded",sans-serif;--fb:"IBM Plex Sans",sans-serif;--fm:"JetBrains Mono",monospace}
+    *{box-sizing:border-box;margin:0;padding:0}[hidden]{display:none!important}
     body{background:var(--ink);color:var(--smoke);font-family:var(--fb);line-height:1.55;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--ember);color:var(--ink)}
     ::-webkit-scrollbar{width:10px}::-webkit-scrollbar-track{background:var(--ink)}::-webkit-scrollbar-thumb{background:var(--line2)}
-    img{display:block;max-width:100%}
-    button{font:inherit;cursor:pointer}
-    .i{width:15px;height:15px;flex:none}
-    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    img{display:block;max-width:100%}button{font:inherit;cursor:pointer}
+    .i{width:15px;height:15px;flex:none}.container{max-width:1100px;margin:0 auto;padding:0 20px}
     :focus-visible{outline:2px solid var(--volt);outline-offset:2px}
-
-    /* ---------- экран входа ---------- */
     .screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;position:relative}
-    .screen::before{content:"";position:absolute;inset:0;pointer-events:none;
-      background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);
-      background-size:56px 56px;
-      -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 25%,transparent 75%);
-      mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 25%,transparent 75%)}
+    .screen::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 25%,transparent 75%);mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 25%,transparent 75%)}
     .login-card{position:relative;width:100%;max-width:440px;background:var(--panel);border:1px solid var(--line);padding:36px 32px}
     .login-card .tagline{font-family:var(--fm);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
     .login-card .tagline .acc{color:var(--ember)}
@@ -45,24 +30,14 @@
     .login-card input:focus{outline:none;border-color:var(--ember);box-shadow:3px 3px 0 rgba(255,62,0,.25)}
     .login-err{margin-top:12px;font-family:var(--fm);font-size:11px;color:var(--ember);min-height:16px}
     .login-foot{margin-top:22px}
-
-    /* ---------- кнопки ---------- */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 22px;border:1px solid transparent;
-      font-family:var(--fm);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
-      transition:transform .2s,box-shadow .2s,background .25s,color .25s,border-color .25s}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:12px 22px;border:1px solid transparent;font-family:var(--fm);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;transition:transform .2s,box-shadow .2s,background .25s,color .25s,border-color .25s}
     .btn:disabled{opacity:.5;cursor:not-allowed}
-    .btn-ember{background:var(--ember);color:var(--ink)}
-    .btn-ember:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(0,217,255,.85)}
-    .btn-volt{background:var(--volt);color:var(--ink)}
-    .btn-volt:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(255,62,0,.85)}
-    .btn-ghost{border-color:var(--line2);color:var(--smoke);background:transparent}
-    .btn-ghost:hover:not(:disabled){border-color:var(--ember);color:var(--fog)}
-    .btn-danger{border-color:rgba(255,62,0,.5);color:var(--ember);background:rgba(255,62,0,.06)}
-    .btn-danger:hover:not(:disabled){background:var(--ember);color:var(--ink)}
-    .btn-sm{min-height:34px;padding:7px 14px;font-size:10.5px}
+    .btn-ember{background:var(--ember);color:var(--ink)}.btn-ember:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(0,217,255,.85)}
+    .btn-volt{background:var(--volt);color:var(--ink)}.btn-volt:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:4px 4px 0 rgba(255,62,0,.85)}
+    .btn-ghost{border-color:var(--line2);color:var(--smoke);background:transparent}.btn-ghost:hover:not(:disabled){border-color:var(--ember);color:var(--fog)}
+    .btn-danger{border-color:var(--ember);color:var(--ember);background:transparent}.btn-danger:hover:not(:disabled){background:var(--ember);color:var(--ink)}
+    .btn-sm{min-height:36px;padding:8px 16px;font-size:10.5px}
     .btn-wide{width:100%}
-
-    /* ---------- шапка приложения ---------- */
     .topbar{position:sticky;top:0;z-index:40;background:rgba(10,10,10,.95);border-bottom:1px solid var(--line)}
     .topbar-in{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 0;flex-wrap:wrap}
     .brand{display:flex;align-items:center;gap:10px}
@@ -71,15 +46,10 @@
     .brand .name i{font-style:normal;color:var(--ember)}
     .brand .sub{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
     .topbar-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-    .who{font-family:var(--fm);font-size:11px;color:var(--dim)}
-    .who b{color:var(--volt);font-weight:400}
-
-    /* ---------- тулбар ---------- */
+    .who{font-family:var(--fm);font-size:11px;color:var(--dim)}.who b{color:var(--volt);font-weight:400}
     .toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:26px 0 8px}
     .toolbar .hint{font-family:var(--fm);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
     .toolbar .hint b{color:var(--ember);font-weight:400}
-
-    /* ---------- карточка проекта ---------- */
     .proj{position:relative;border:1px solid var(--line);background:var(--panel);margin:16px 0;transition:border-color .3s}
     .proj.dirty{border-color:var(--ember)}
     .proj-head{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;user-select:none}
@@ -92,7 +62,6 @@
     .proj.open .proj-toggle{transform:rotate(90deg);color:var(--ember)}
     .proj-body{border-top:1px solid var(--line);padding:22px 18px;display:none}
     .proj.open .proj-body{display:block}
-
     .f-grid{display:grid;gap:16px;grid-template-columns:1fr 1fr}
     @media (max-width:700px){.f-grid{grid-template-columns:1fr}}
     .f{display:flex;flex-direction:column;gap:7px}
@@ -107,11 +76,8 @@
     .f-check{flex-direction:row;align-items:center;gap:10px}
     .f-check input{width:18px;height:18px;accent-color:var(--ember);cursor:pointer}
     .f-check label{cursor:pointer}
-
     .sec-label{display:flex;align-items:center;gap:10px;margin:26px 0 12px;font-family:var(--fm);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ember)}
     .sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
-
-    /* ---------- фото ---------- */
     .cover-row{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
     .cover-box{position:relative;width:180px;flex:none}
     .cover-box img{width:180px;height:135px;object-fit:cover;border:1px solid var(--line2);background:var(--carbon)}
@@ -129,11 +95,7 @@
     .drop{display:flex;align-items:center;justify-content:center;gap:10px;min-height:110px;border:1px dashed var(--line2);color:var(--dim);cursor:pointer;transition:border-color .25s,color .25s,background .25s;font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-align:center;padding:10px}
     .drop:hover,.drop.over{border-color:var(--volt);color:var(--volt);background:rgba(0,217,255,.05)}
     .proj-foot{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
-
-    /* ---------- тост / busy ---------- */
-    #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);z-index:100;opacity:0;pointer-events:none;
-      background:var(--panel);border:1px solid var(--ember);color:var(--fog);padding:13px 24px;font-family:var(--fm);font-size:12px;letter-spacing:.08em;
-      box-shadow:6px 6px 0 rgba(255,62,0,.2);transition:opacity .3s,transform .3s;max-width:90vw;text-align:center}
+    #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);z-index:100;opacity:0;pointer-events:none;background:var(--panel);border:1px solid var(--ember);color:var(--fog);padding:13px 24px;font-family:var(--fm);font-size:12px;letter-spacing:.08em;box-shadow:6px 6px 0 rgba(255,62,0,.2);transition:opacity .3s,transform .3s;max-width:90vw;text-align:center}
     #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     #toast.err{border-color:var(--ember);color:var(--ember)}
     #toast.ok{border-color:var(--volt);color:var(--volt)}
@@ -145,35 +107,26 @@
 </head>
 <body>
 
-  <!-- ================= ЭКРАН ВХОДА ================= -->
   <div id="login" class="screen">
     <div class="login-card">
       <p class="tagline"><span class="acc">[ SVN-LAB ]</span> служебный доступ</p>
       <h1>Админ-панель</h1>
-      <p class="note">Управление проектами лаборатории хранится в репозитории GitHub
-        (<b style="color:var(--volt);font-weight:400">se7ka-gh/svn-lab-site-qwen</b>). Введите Personal Access Token
-        с правом <b style="color:var(--fog);font-weight:600">Contents: Read and write</b> — он сохранится только в вашем браузере.</p>
+      <p class="note">Управление проектами хранится в репозитории GitHub (<b style="color:var(--volt);font-weight:400">se7ka-gh/svn-lab-site-qwen</b>). Введите Personal Access Token с правом <b style="color:var(--fog);font-weight:600">Contents: Read and write</b>.</p>
       <label for="token">GitHub Personal Access Token</label>
       <input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" />
       <p class="login-err" id="login-err"></p>
       <div class="login-foot">
         <button id="login-btn" class="btn btn-ember btn-wide">Войти</button>
       </div>
-      <p class="note" style="margin-top:16px;font-size:11.5px">Токен создаётся в GitHub → Settings → Developer settings →
-        Fine-grained tokens. Начинается с <b style="color:var(--fog)">github_pat_</b>.</p>
     </div>
   </div>
 
-  <!-- ================= ПРИЛОЖЕНИЕ ================= -->
   <div id="app" hidden>
     <header class="topbar">
       <div class="container topbar-in">
         <div class="brand">
           <span class="mark">S</span>
-          <span>
-            <span class="name">SVN<i>—</i>LAB</span><br/>
-            <span class="sub">админ-панель</span>
-          </span>
+          <span><span class="name">SVN<i>—</i>LAB</span><br/><span class="sub">админ-панель</span></span>
         </div>
         <div class="topbar-right">
           <span class="who">вошёл как <b id="who"></b></span>
@@ -197,47 +150,30 @@
   <div id="busy" hidden><div class="sq"></div><p id="busy-text">Работаем…</p></div>
 
   <script>
-  /* ============================================================
-     SVN-LAB · Админ-панель
-     Хранение: проекты → data/projects.json, фото → images/projects/<slug>/
-     Всё читается/пишется через GitHub Contents API.
-     ============================================================ */
   "use strict";
-
-  /* ---------- конфигурация ---------- */
   const OWNER = "se7ka-gh";
   const REPO  = "svn-lab-site-qwen";
   const BRANCH = "main";
   const API = `https://api.github.com/repos/${OWNER}/${REPO}`;
-  /* База для превью фото: полный URL GitHub Pages + путь без ведущего слэша */
-  const SITE_BASE = "https://se7ka-gh.github.io/svn-lab-site-qwen/";
+  const SITE_BASE = "https://svn-lab.ru/"; /* Используем твой реальный домен для превью */
   const PROJECTS_PATH = "data/projects.json";
   const TOKEN_KEY = "svnlab_admin_token";
-
   const STATUS_LABEL = { ready: "Готов", forsale: "В продаже", inprogress: "В работе" };
 
-  /* ---------- состояние ---------- */
   let token = localStorage.getItem(TOKEN_KEY) || "";
   let projects = [];
-  let dirty = new Set(); /* индексы изменённых проектов */
+  let dirty = new Set();
 
-  /* ---------- утилиты ---------- */
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const esc = (s) => String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
   function toast(msg, kind = "") {
-    const t = $("#toast");
-    t.textContent = msg;
-    t.className = "show " + kind;
-    clearTimeout(toast._t);
-    toast._t = setTimeout(() => { t.className = ""; }, 3200);
+    const t = $("#toast"); t.textContent = msg; t.className = "show " + kind;
+    clearTimeout(toast._t); toast._t = setTimeout(() => { t.className = ""; }, 3200);
   }
-  function busy(on, text = "Работаем…") {
-    $("#busy").hidden = !on;
-    $("#busy-text").textContent = text;
-  }
-  /* относительный путь → полный URL превью */
+  function busy(on, text = "Работаем…") { $("#busy").hidden = !on; $("#busy-text").textContent = text; }
+  
   function imgUrl(pathOrUrl) {
     if (!pathOrUrl) return "";
     if (/^https?:\/\//.test(pathOrUrl)) return pathOrUrl;
@@ -245,11 +181,6 @@
   }
   function sanitizeName(name) {
     return name.toLowerCase().replace(/\.[a-z0-9]+$/i, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "photo";
-  }
-  function slugify(name) {
-    const map = { а:"a",б:"b",в:"v",г:"g",д:"d",е:"e",ё:"e",ж:"zh",з:"z",и:"i",й:"y",к:"k",л:"l",м:"m",н:"n",о:"o",п:"p",р:"r",с:"s",т:"t",у:"u",ф:"f",х:"h",ц:"c",ч:"ch",ш:"sh",щ:"sch",ъ:"",ы:"y",ь:"",э:"e",ю:"yu",я:"ya" };
-    return name.toLowerCase().split("").map(ch => map[ch] !== undefined ? map[ch] : ch).join("")
-      .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
   }
   function fileToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -260,9 +191,12 @@
     });
   }
 
-  /* ---------- GitHub API ---------- */
+  /* ИСПРАВЛЕНИЕ 1: Правильная обработка глобальных и репозиторных путей API */
   async function gh(path, options = {}) {
-    const res = await fetch(API + path, {
+    const isGlobal = path.startsWith('/user') || path.startsWith('/orgs');
+    const url = isGlobal ? `https://api.github.com${path}` : `${API}${path}`;
+    
+    const res = await fetch(url, {
       ...options,
       headers: {
         Authorization: "Bearer " + token,
@@ -279,27 +213,23 @@
     return res.status === 204 ? null : res.json();
   }
 
-  /* чтение текста: base64 → UTF-8 через TextDecoder (важно для кириллицы) */
   async function ghReadText(path) {
     const data = await gh(`/contents/${path}?ref=${BRANCH}`);
     const bytes = Uint8Array.from(atob(data.content.replace(/\n/g, "")), (c) => c.charCodeAt(0));
     return { text: new TextDecoder("utf-8").decode(bytes), sha: data.sha };
   }
 
-  /* запись текста: UTF-8 → base64 (кириллица через unescape/encodeURIComponent) */
   async function ghWriteText(path, text, sha, message) {
     const content = btoa(unescape(encodeURIComponent(text)));
     return gh(`/contents/${path}`, { method: "PUT", body: JSON.stringify({ message, content, sha, branch: BRANCH }) });
   }
 
-  /* загрузка бинарника (фото) */
   async function ghPutBinary(path, base64, sha, message) {
     return gh(`/contents/${path}`, { method: "PUT", body: JSON.stringify({ message, content: base64, ...(sha ? { sha } : {}), branch: BRANCH }) });
   }
 
   async function ghGetSha(path) {
-    try { const d = await gh(`/contents/${path}?ref=${BRANCH}`); return d.sha; }
-    catch { return null; }
+    try { const d = await gh(`/contents/${path}?ref=${BRANCH}`); return d.sha; } catch { return null; }
   }
 
   async function ghDelete(path, message) {
@@ -308,14 +238,12 @@
     return gh(`/contents/${path}`, { method: "DELETE", body: JSON.stringify({ message, sha, branch: BRANCH }) });
   }
 
-  /* ---------- данные проектов ---------- */
   async function loadProjects() {
     const { text } = await ghReadText(PROJECTS_PATH);
     const data = JSON.parse(text);
     projects = Array.isArray(data) ? data : (data.projects || []);
   }
 
-  /* Сохраняем весь массив. SHA всегда берём свежим, чтобы не получить конфликт. */
   async function saveProjects(message) {
     const { sha } = await ghReadText(PROJECTS_PATH);
     await ghWriteText(PROJECTS_PATH, JSON.stringify(projects, null, 2), sha, message);
@@ -325,65 +253,35 @@
 
   function defaultProject() {
     const n = projects.length + 1;
-    return {
-      slug: "novyi-proekt-" + n,
-      name: "НОВЫЙ ПРОЕКТ " + n,
-      base: "—",
-      status: "ready",
-      price: null,
-      progress: 0,
-      hours: 0,
-      concept: "",
-      materials: [],
-      tags: [],
-      cover: "",
-      gallery: [],
-      featured: false,
-    };
+    return { slug: "novyi-proekt-" + n, name: "НОВЫЙ ПРОЕКТ " + n, base: "—", status: "ready", price: null, progress: 0, hours: 0, concept: "", materials: [], tags: [], cover: "", gallery: [], featured: false };
   }
 
-  /* ---------- авторизация ---------- */
   async function tryLogin(tok) {
     token = tok;
-    const me = await gh("/user");
+    const me = await gh("/user"); /* Теперь это сработает корректно */
     localStorage.setItem(TOKEN_KEY, tok);
     return me;
   }
 
   function showApp(user) {
-    $("#login").hidden = true;
-    $("#app").hidden = false;
-    $("#who").textContent = "@" + user.login;
+    $("#login").hidden = true; $("#app").hidden = false; $("#who").textContent = "@" + user.login;
   }
 
-  function logout() {
-    localStorage.removeItem(TOKEN_KEY);
-    token = "";
-    location.reload();
-  }
-
-  /* ============================================================
-     РЕНДЕР
-     ============================================================ */
+  function logout() { localStorage.removeItem(TOKEN_KEY); token = ""; location.reload(); }
 
   function renderDirtyStates() {
-    $$(".proj").forEach((el) => {
-      const i = Number(el.dataset.index);
-      el.classList.toggle("dirty", dirty.has(i));
-    });
+    $$(".proj").forEach((el) => { const i = Number(el.dataset.index); el.classList.toggle("dirty", dirty.has(i)); });
     $("#count").textContent = projects.length;
   }
 
   function statusBadge(st) {
-    const cls = st === "forsale" ? "badge-forsale" : st === "inprogress" ? "badge-inprogress" : "badge-ready";
     const color = st === "forsale" ? "var(--ember)" : st === "inprogress" ? "var(--smoke)" : "var(--volt)";
     return `<span style="display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border:1px solid ${color};color:${color};font-family:var(--fm);font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">${STATUS_LABEL[st] || st}</span>`;
   }
 
   function photoCard(p, src, isCover) {
     const url = imgUrl(src);
-    return `
-      <div class="ph ${isCover ? "is-cover" : ""}" data-src="${esc(src)}">
+    return `<div class="ph ${isCover ? "is-cover" : ""}" data-src="${esc(src)}">
         <img src="${esc(url)}" alt="" loading="lazy" />
         <div class="ph-acts">
           <button type="button" class="act-cov ${isCover ? "cov-on" : ""}" title="Сделать обложкой">${isCover ? "✓ обложка" : "в обложку"}</button>
@@ -395,18 +293,11 @@
   function renderPhotos(root, p) {
     const box = $(".photos-wrap", root);
     const gallery = Array.isArray(p.gallery) ? p.gallery : [];
-    box.innerHTML = `
-      <div class="cover-row">
-        <div class="cover-box">
-          <img src="${esc(imgUrl(p.cover))}" alt="Обложка" onerror="this.style.opacity='.25'" />
-          <p class="cap">обложка проекта</p>
-        </div>
+    box.innerHTML = `<div class="cover-row">
+        <div class="cover-box"><img src="${esc(imgUrl(p.cover))}" alt="Обложка" onerror="this.style.opacity='.25'" /><p class="cap">обложка проекта</p></div>
         <div class="gal">
           ${gallery.map((g) => photoCard(p, g, g === p.cover)).join("")}
-          <label class="drop" tabindex="0">
-            <span>+ загрузить фото<br/><small style="letter-spacing:.04em;text-transform:none;color:var(--dim)">можно несколько сразу</small></span>
-            <input type="file" accept="image/*" multiple hidden />
-          </label>
+          <label class="drop" tabindex="0"><span>+ загрузить фото<br/><small style="letter-spacing:.04em;text-transform:none;color:var(--dim)">можно несколько сразу</small></span><input type="file" accept="image/*" multiple hidden /></label>
         </div>
       </div>`;
 
@@ -427,74 +318,29 @@
   function editorHtml(p, i) {
     const materials = (p.materials || []).join("\n");
     const tags = (p.tags || []).join(", ");
-    return `
-    <article class="proj ${dirty.has(i) ? "dirty" : ""} ${i === 0 ? "open" : ""}" data-index="${i}">
+    return `<article class="proj ${dirty.has(i) ? "dirty" : ""} ${i === 0 ? "open" : ""}" data-index="${i}">
       <header class="proj-head" role="button" tabindex="0" aria-expanded="${i === 0}">
         <img class="proj-thumb" src="${esc(imgUrl(p.cover))}" alt="" onerror="this.style.opacity='.2'" />
-        <div>
-          <div class="proj-name">${esc(p.name)}</div>
-          <div class="proj-slug">/${esc(p.slug)} · ${p.hours || 0} ч</div>
-        </div>
-        <span class="proj-spacer"></span>
-        ${statusBadge(p.status)}
+        <div><div class="proj-name">${esc(p.name)}</div><div class="proj-slug">/${esc(p.slug)} · ${p.hours || 0} ч</div></div>
+        <span class="proj-spacer"></span>${statusBadge(p.status)}
         <svg class="i proj-toggle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
       </header>
-
       <div class="proj-body">
         <div class="f-grid">
-          <div class="f">
-            <label>Название <span class="req">*</span></label>
-            <input data-f="name" type="text" value="${esc(p.name)}" />
-          </div>
-          <div class="f">
-            <label>Slug (латиница, дефисы) <span class="req">*</span></label>
-            <input data-f="slug" type="text" value="${esc(p.slug)}" />
-            <span class="hint">используется в адресе #/portfolio/&lt;slug&gt;</span>
-          </div>
-          <div class="f">
-            <label>База корпуса</label>
-            <input data-f="base" type="text" value="${esc(p.base)}" />
-          </div>
-          <div class="f">
-            <label>Статус</label>
-            <select data-f="status">
-              ${Object.entries(STATUS_LABEL).map(([v, l]) => `<option value="${v}" ${p.status === v ? "selected" : ""}>${l}</option>`).join("")}
-            </select>
-          </div>
-          <div class="f">
-            <label>Часы работы</label>
-            <input data-f="hours" type="number" min="0" value="${p.hours || 0}" />
-          </div>
-          <div class="f">
-            <label>Цена, ₽ <span class="hint-inline" style="color:var(--dim)">(для «В продаже»)</span></label>
-            <input data-f="price" type="number" min="0" value="${p.price ?? ""}" placeholder="—" />
-          </div>
-          <div class="f">
-            <label>Прогресс, % <span style="color:var(--dim)">(для «В работе»)</span></label>
-            <input data-f="progress" type="number" min="0" max="100" value="${p.progress ?? 0}" />
-          </div>
-          <div class="f f-check">
-            <input data-f="featured" type="checkbox" id="feat-${i}" ${p.featured ? "checked" : ""} />
-            <label for="feat-${i}">Показывать в «Избранном» на главной</label>
-          </div>
-
-          <div class="f full">
-            <label>Концепция <span style="color:var(--dim)">(отобразится под фото)</span></label>
-            <textarea data-f="concept" rows="5">${esc(p.concept)}</textarea>
-          </div>
-          <div class="f">
-            <label>Материалы <span style="color:var(--dim)">(каждый с новой строки)</span></label>
-            <textarea data-f="materials" rows="4">${esc(materials)}</textarea>
-          </div>
-          <div class="f">
-            <label>Теги <span style="color:var(--dim)">(через запятую)</span></label>
-            <textarea data-f="tags" rows="4">${esc(tags)}</textarea>
-          </div>
+          <div class="f"><label>Название <span class="req">*</span></label><input data-f="name" type="text" value="${esc(p.name)}" /></div>
+          <div class="f"><label>Slug (латиница, дефисы) <span class="req">*</span></label><input data-f="slug" type="text" value="${esc(p.slug)}" /><span class="hint">используется в адресе #/portfolio/&lt;slug&gt;</span></div>
+          <div class="f"><label>База корпуса</label><input data-f="base" type="text" value="${esc(p.base)}" /></div>
+          <div class="f"><label>Статус</label><select data-f="status">${Object.entries(STATUS_LABEL).map(([v, l]) => `<option value="${v}" ${p.status === v ? "selected" : ""}>${l}</option>`).join("")}</select></div>
+          <div class="f"><label>Часы работы</label><input data-f="hours" type="number" min="0" value="${p.hours || 0}" /></div>
+          <div class="f"><label>Цена, ₽</label><input data-f="price" type="number" min="0" value="${p.price ?? ""}" placeholder="—" /></div>
+          <div class="f"><label>Прогресс, %</label><input data-f="progress" type="number" min="0" max="100" value="${p.progress ?? 0}" /></div>
+          <div class="f f-check"><input data-f="featured" type="checkbox" id="feat-${i}" ${p.featured ? "checked" : ""} /><label for="feat-${i}">Показывать в «Избранном» на главной</label></div>
+          <div class="f full"><label>Концепция</label><textarea data-f="concept" rows="5">${esc(p.concept)}</textarea></div>
+          <div class="f"><label>Материалы (каждый с новой строки)</label><textarea data-f="materials" rows="4">${esc(materials)}</textarea></div>
+          <div class="f"><label>Теги (через запятую)</label><textarea data-f="tags" rows="4">${esc(tags)}</textarea></div>
         </div>
-
         <div class="sec-label">Фотографии</div>
         <div class="photos-wrap"></div>
-
         <div class="proj-foot">
           <button type="button" class="btn btn-volt btn-sm save-one">Сохранить проект</button>
           <button type="button" class="btn btn-ghost btn-sm open-site">Открыть на сайте</button>
@@ -513,17 +359,11 @@
     $$(".proj", list).forEach((root) => {
       const i = Number(root.dataset.index);
       const p = projects[i];
-
-      /* раскрытие */
       const head = $(".proj-head", root);
-      const toggle = () => {
-        root.classList.toggle("open");
-        head.setAttribute("aria-expanded", root.classList.contains("open"));
-      };
+      const toggle = () => { root.classList.toggle("open"); head.setAttribute("aria-expanded", root.classList.contains("open")); };
       head.addEventListener("click", toggle);
       head.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
 
-      /* текстовые поля → в память + пометка dirty */
       $$("[data-f]", root).forEach((el) => {
         el.addEventListener("input", () => {
           const f = el.dataset.f;
@@ -532,8 +372,7 @@
           else if (f === "materials") p.materials = el.value.split("\n").map(s => s.trim()).filter(Boolean);
           else if (f === "tags") p.tags = el.value.split(",").map(s => s.trim()).filter(Boolean);
           else p[f] = el.value;
-          dirty.add(i);
-          renderDirtyStates();
+          dirty.add(i); renderDirtyStates();
           if (f === "name" || f === "slug" || f === "status" || f === "hours") {
             $(".proj-name", root).textContent = p.name;
             $(".proj-slug", root).textContent = `/${p.slug} · ${p.hours || 0} ч`;
@@ -551,10 +390,7 @@
         finally { busy(false); }
       });
 
-      $(".open-site", root).addEventListener("click", () => {
-        window.open(SITE_BASE + "#/portfolio/" + p.slug, "_blank", "noopener");
-      });
-
+      $(".open-site", root).addEventListener("click", () => { window.open(SITE_BASE + "#/portfolio/" + p.slug, "_blank", "noopener"); });
       $(".del-project", root).addEventListener("click", () => deleteProject(i));
     });
   }
@@ -566,39 +402,33 @@
     return true;
   }
 
-  /* ---------- операции с фото ---------- */
-
   async function uploadPhotos(p, files, root) {
     const list = [...files].filter((f) => f.type.startsWith("image/"));
     if (!list.length) return;
     if (!validate(p)) return;
     busy(true, "Загружаем фото…");
     try {
-      /* ВАЖНО: for...of с await, а не forEach — иначе загрузка не дождётся */
       for (const file of list) {
         const fname = `${Date.now()}-${sanitizeName(file.name)}.png`;
-        const path = `images/projects/${p.slug}/${fname}`;
+        /* ИСПРАВЛЕНИЕ 2: Плоская структура папок, как в твоем текущем projects.json */
+        const path = `images/projects/${fname}`; 
         const b64 = await fileToBase64(file);
-        await ghPutBinary(path, b64, null, `chore(admin): upload ${p.slug}/${fname}`);
-        p.gallery.push(path);
-        if (!p.cover) p.cover = path;
+        await ghPutBinary(path, b64, null, `chore(admin): upload ${fname}`);
+        p.gallery.push(`/${path}`);
+        if (!p.cover) p.cover = `/${path}`;
       }
       await saveProjects(`chore(admin): add photos to ${p.slug}`);
       renderPhotos(root, p);
       toast(`Загружено фото: ${list.length}`, "ok");
-    } catch (e) {
-      toast("Ошибка загрузки: " + e.message, "err");
-    } finally { busy(false); }
+    } catch (e) { toast("Ошибка загрузки: " + e.message, "err"); }
+    finally { busy(false); }
   }
 
   async function setCover(p, src, root) {
     p.cover = src;
     busy(true, "Меняем обложку…");
-    try {
-      await saveProjects(`chore(admin): set cover for ${p.slug}`);
-      renderPhotos(root, p);
-      toast("Обложка обновлена", "ok");
-    } catch (e) { toast("Ошибка: " + e.message, "err"); }
+    try { await saveProjects(`chore(admin): set cover for ${p.slug}`); renderPhotos(root, p); toast("Обложка обновлена", "ok"); }
+    catch (e) { toast("Ошибка: " + e.message, "err"); }
     finally { busy(false); }
   }
 
@@ -606,9 +436,8 @@
     if (!confirm("Удалить это фото из репозитория?")) return;
     busy(true, "Удаляем фото…");
     try {
-      /* удаляем файл из репозитория (только если это относительный путь) */
       if (!/^https?:\/\//.test(src)) {
-        try { await ghDelete(src, `chore(admin): delete ${src}`); } catch {}
+        try { await ghDelete(src.replace(/^\//, ""), `chore(admin): delete ${src}`); } catch {}
       }
       p.gallery = p.gallery.filter((g) => g !== src);
       if (p.cover === src) p.cover = p.gallery[0] || "";
@@ -618,8 +447,6 @@
     } catch (e) { toast("Ошибка: " + e.message, "err"); }
     finally { busy(false); }
   }
-
-  /* ---------- операции с проектами ---------- */
 
   function addProject() {
     const p = defaultProject();
@@ -635,11 +462,8 @@
     if (!confirm(`Удалить проект «${p.name}» и все его фото из репозитория?`)) return;
     busy(true, "Удаляем проект…");
     try {
-      /* удаляем фото проекта (обложку и галерею), только относительные пути */
-      const paths = [...new Set([p.cover, ...(p.gallery || [])])].filter((x) => x && !/^https?:\/\//.test(x));
-      for (const path of paths) { /* for...of с await */
-        try { await ghDelete(path, `chore(admin): delete ${path}`); } catch {}
-      }
+      const paths = [...new Set([p.cover, ...(p.gallery || [])])].filter((x) => x && !/^https?:\/\//.test(x)).map(x => x.replace(/^\//, ""));
+      for (const path of paths) { try { await ghDelete(path, `chore(admin): delete ${path}`); } catch {} }
       projects.splice(i, 1);
       dirty = new Set([...dirty].filter((d) => d !== i).map((d) => (d > i ? d - 1 : d)));
       await saveProjects(`chore(admin): delete ${p.slug}`);
@@ -649,10 +473,8 @@
     finally { busy(false); }
   }
 
-  /* ---------- запуск ---------- */
-
   async function boot() {
-    if (!token) return; /* покажем форму входа */
+    if (!token) return;
     busy(true, "Проверяем доступ…");
     try {
       const me = await gh("/user");
@@ -661,8 +483,7 @@
       renderProjects();
       toast(`Загружено проектов: ${projects.length}`, "ok");
     } catch (e) {
-      localStorage.removeItem(TOKEN_KEY);
-      token = "";
+      localStorage.removeItem(TOKEN_KEY); token = "";
       $("#login-err").textContent = "Токен недействителен или нет доступа: " + e.message;
     } finally { busy(false); }
   }
@@ -679,17 +500,15 @@
       showApp(me);
       renderProjects();
       toast(`Добро пожаловать, @${me.login}`, "ok");
-    } catch (e) {
-      $("#login-err").textContent = "Не удалось войти: " + e.message;
-    } finally { $("#login-btn").disabled = false; }
+    } catch (e) { $("#login-err").textContent = "Не удалось войти: " + e.message; }
+    finally { $("#login-btn").disabled = false; }
   });
 
   $("#token").addEventListener("keydown", (e) => { if (e.key === "Enter") $("#login-btn").click(); });
   $("#logout").addEventListener("click", logout);
   $("#add-project").addEventListener("click", addProject);
-
   $("#save-all").addEventListener("click", async () => {
-    for (const p of projects) if (!validate(p)) return; /* for...of — валидируем все */
+    for (const p of projects) if (!validate(p)) return;
     busy(true, "Сохраняем все изменения…");
     try { await saveProjects("chore(admin): update projects"); toast("Все изменения сохранены", "ok"); }
     catch (e) { toast("Ошибка: " + e.message, "err"); }
