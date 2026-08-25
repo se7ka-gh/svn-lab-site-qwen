@@ -106,13 +106,13 @@ function pageHome() {
   const hero = `
   <section class="hero">
     <div class="grid-fade" aria-hidden="true"></div>
-    <p class="vertical-note hero-geo" aria-hidden="true">55.7558° N — 37.6173° E // MSK LAB</p>
+    <p class="vertical-note hero-geo" aria-hidden="true"></p>
 
     <div class="container hero-grid">
       <div class="hero-left">
         <p class="mono-tag reveal">
           <span class="acc">[ SYS.START ]</span> Лаборатория кастомных корпусов — est. 2024
-          <span class="cursor-blink" aria-hidden="true">▌</span>
+          <span class="cursor-blink" aria-hidden="true">▌Novosibirsk </span>
         </p>
 
         <h1 class="hero-title">
