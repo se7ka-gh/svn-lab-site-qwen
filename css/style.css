@@ -29,6 +29,13 @@
   padding: 0;
 }
 
+/* Авторские display (например, .mobile-menu { display: flex })
+   не должны отменять атрибут hidden — иначе скрытые блоки
+   (мобильное меню, ошибки полей) перекрывают контент. */
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -32,10 +32,6 @@ const STATUS_META = {
    ЗАГРУЗКА ПРОЕКТОВ ИЗ JSON
    ============================================================ */
 
-/* Относительный путь (без «/» в начале) — корректно работает и в корне
-   домена, и в подкаталоге GitHub Pages (username.github.io/repo). */
-const PROJECTS_URL = "data/projects.json";
-
 /* Массив заполняется в loadProjects(); let — чтобы его можно было
    переприсвоить после загрузки. */
 let PROJECTS = [];
@@ -74,6 +70,11 @@ function normalizeProject(raw, i) {
 const LOAD_TIMEOUT_MS = 6000;
 
 async function loadProjects() {
+  /* URL объявлен внутри функции специально: локальную константу
+     невозможно потерять при ручном слиянии версий файла.
+     Путь относительный (без «/» в начале) — работает и в корне домена,
+     и в подкаталоге GitHub Pages (username.github.io/repo). */
+  const PROJECTS_URL = "data/projects.json";
   const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
   const timer = controller ? setTimeout(function () { controller.abort(); }, LOAD_TIMEOUT_MS) : null;
   try {
