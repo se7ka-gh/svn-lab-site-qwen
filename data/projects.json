@@ -9,7 +9,12 @@
     "materials": [],
     "hours": 58,
     "cover": "/images/projects/new-project-1787652551434.png",
-    "gallery": [],
+    "gallery": [
+      "/images/projects/new-project_001-gal-1787661230631-0.png",
+      "/images/projects/new-project_001-gal-1787661235855-1.png",
+      "/images/projects/new-project_001-gal-1787661243431-2.png",
+      "/images/projects/new-project_001-gal-1787661248929-3.png"
+    ],
     "createdAt": "2026-08-25T09:56:45.932Z",
     "featured": false,
     "tags": []
