@@ -24,8 +24,8 @@ const STATUS_META = {
   inprogress: { label: "В работе", cls: "badge-inprogress" },
 };
 
-const PROJECTS = [
-  // Данные теперь загружаются из JSON-файла
+/* Массив заполняется в loadProjects(); let — чтобы его можно было
+   переприсвоить после загрузки. */
 let PROJECTS = [];
 
 /* Сюда попадает ошибка загрузки — main.js показывает её на странице. */

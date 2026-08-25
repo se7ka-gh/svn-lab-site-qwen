@@ -1226,6 +1226,31 @@ function initShell() {
 
 /* ---------- старт ---------- */
 
+/* Показывается, если js/filters.js (слой данных) вообще не исполнился —
+   например, из-за SyntaxError внутри файла или его отсутствия.
+   Без этого сайт умирал молча: loadProjects не определён → init падал. */
+function bootstrapErrorHtml() {
+  const mail = typeof EMAIL !== "undefined" ? EMAIL : "lab@svn-lab.ru";
+  const tg = typeof TG_MAIN !== "undefined" ? TG_MAIN : "https://t.me/se7ka_svn";
+  return `
+  <div class="container portfolio-pad">
+    <div class="data-error">
+      ${corners()}
+      <p class="mono-tag"><span class="acc">[ SYS.ERR ]</span> слой данных недоступен</p>
+      <h2>Файл js/filters.js не исполнился</h2>
+      <p>Интерфейс не может получить данные лаборатории. Почти всегда это значит, что в
+        <b>js/filters.js есть синтаксическая ошибка</b> — консоль браузера показывает её
+        первой (F12 → Console, первое красное сообщение со словом «SyntaxError»).
+        Замените файл актуальной версией из репозитория целиком, без ручного слияния,
+        и обновите страницу с очисткой кэша (Ctrl+Shift+R).</p>
+      <div class="btns">
+        <button class="btn btn-ghost" type="button" onclick="location.reload()">Обновить страницу</button>
+        <a class="btn btn-ember" href="${tg}" target="_blank" rel="noopener noreferrer">${IC.tg} Telegram @se7ka_svn</a>
+      </div>
+    </div>
+  </div>`;
+}
+
 /* Данные проектов лежат в data/projects.json и загружаются асинхронно,
    поэтому первый рендер ждёт loadProjects(). Все последующие переходы
    (hashchange) рендерятся синхронно — массив уже в памяти.
@@ -1240,10 +1265,29 @@ async function init() {
     console.error("[SVN-LAB] сбой инициализации оболочки:", err);
   }
 
-  await loadProjects(); /* ошибки ловит сама, наружу не бросает */
+  /* фильтры/данные не определились — значит js/filters.js не исполнился */
+  if (typeof loadProjects !== "function" || typeof PROJECTS === "undefined") {
+    console.error(
+      "[SVN-LAB] js/filters.js не исполнился: loadProjects/PROJECTS недоступны. " +
+      "Ищите первое сообщение «SyntaxError» в консоли — оно указывает на битый файл."
+    );
+    if (app) {
+      window.__SVN_RENDERED = true; /* чтобы инлайн-страховка не перетирала диагноз */
+      app.innerHTML = bootstrapErrorHtml();
+    }
+    return;
+  }
+
+  try {
+    await loadProjects(); /* ошибки ловит сама, наружу не бросает */
+  } catch (err) {
+    dataError = err;
+    console.error("[SVN-LAB] сбой загрузки данных:", err);
+  }
 
   try {
     render();
+    window.addEventListener("hashchange", render);
   } catch (err) {
     console.error("[SVN-LAB] сбой рендеринга:", err);
     if (app) {
@@ -1252,6 +1296,5 @@ async function init() {
         `<div class="container portfolio-pad">` + dataErrorBlock() + `</div>`;
     }
   }
-  window.addEventListener("hashchange", render);
 }
 init();
