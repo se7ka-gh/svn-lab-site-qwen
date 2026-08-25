@@ -28,6 +28,15 @@ const STATUS_META = {
   inprogress: { label: "В работе", cls: "badge-inprogress" },
 };
 
+/* База GitHub Pages: относительные пути фото (из админки) превращаются
+   в полные URL; абсолютные http-ссылки проходят как есть. */
+const SITE_BASE = "https://se7ka-gh.github.io/svn-lab-site-qwen/";
+function resolveImg(pathOrUrl) {
+  if (!pathOrUrl) return "";
+  if (/^https?:\/\//.test(pathOrUrl)) return pathOrUrl;
+  return SITE_BASE + String(pathOrUrl).replace(/^\//, "");
+}
+
 /* ============================================================
    ЗАГРУЗКА ПРОЕКТОВ ИЗ JSON
    ============================================================ */
@@ -48,16 +57,14 @@ function normalizeProject(raw, i) {
     slug: raw.slug || "project-" + (i + 1),
     name: raw.name || "Без названия",
     base: raw.base || "—",
-    format: raw.format || "—",
     status: status,
     price: typeof raw.price === "number" ? raw.price : null,
     progress: typeof raw.progress === "number" ? raw.progress : 0,
-    description: raw.description || "",
-    concept: raw.concept || raw.description || "",
+    concept: raw.concept || "",
     materials: Array.isArray(raw.materials) ? raw.materials : [],
     hours: typeof raw.hours === "number" ? raw.hours : 0,
-    cover: raw.cover || raw.cover_image || "",
-    createdAt: raw.createdAt || raw.created_at || new Date().toISOString(),
+    cover: resolveImg(raw.cover || raw.cover_image || ""),
+    gallery: (Array.isArray(raw.gallery) ? raw.gallery : []).map(resolveImg),
     featured: !!raw.featured,
     tags: Array.isArray(raw.tags) ? raw.tags : [],
   };

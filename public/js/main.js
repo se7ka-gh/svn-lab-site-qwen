@@ -25,6 +25,12 @@ const esc = (s) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
+/* короткий отрывок текста для карточек */
+const excerpt = (s, n = 120) => {
+  const t = String(s || "").replace(/\s+/g, " ").trim();
+  return t.length > n ? t.slice(0, n).trimEnd() + "…" : t;
+};
+
 const smoothScrollTop = () =>
   window.scrollTo({ top: 0, behavior: prefersReduced() ? "auto" : "smooth" });
 
@@ -83,9 +89,9 @@ function projectCard(p, delay = 0) {
       <span class="card-idx">UNIT_${projectIndex(p)}</span>
     </div>
     <div class="card-body">
-      <p class="card-meta">${esc(p.base)} · ${esc(p.format)}</p>
+      <p class="card-meta">${esc(p.base)} · ${p.hours || 0} ч работы</p>
       <h3 class="card-name">${esc(p.name)}</h3>
-      <p class="card-desc">${esc(p.description)}</p>
+      <p class="card-desc">${esc(excerpt(p.concept))}</p>
       <div class="card-foot">
         ${price}
         <span class="card-link">Смотреть ${IC.arrow}</span>
@@ -441,22 +447,14 @@ function bindPortfolio() {
    СТРАНИЦА: ПРОЕКТ (детальная)
    ============================================================ */
 
-const GALLERY_EXTRA = {
-  "cougar-dust-2-knight": [IMG.paint],
-  "cougar-dust-2-oni": [IMG.sketch],
-  "deepcool-matrexx-circuit": [IMG.paint],
-  "fractal-define-blueprint": [IMG.sketch],
-  "zalman-s3-nebula": [IMG.sketch],
-  "thermaltake-versa-flame": [IMG.paint],
-};
-
 function pageProject(slug) {
   const p = getBySlug(slug);
   if (!p) return pageNotFound(slug);
 
   document.title = `${p.name} — SVN-LAB | svn-lab.ru`;
 
-  const gallery = [p.cover, ...(GALLERY_EXTRA[p.slug] || [])];
+  /* галерея = обложка + фото проекта (управляется через админку) */
+  const gallery = [p.cover, ...(p.gallery || [])].filter(Boolean);
   const idx = PROJECTS.indexOf(p);
   const prev = PROJECTS[(idx - 1 + PROJECTS.length) % PROJECTS.length];
   const next = PROJECTS[(idx + 1) % PROJECTS.length];
@@ -523,15 +521,11 @@ function pageProject(slug) {
         ${corners("c-dim")}
         ${badge(p.status, p.progress)}
         <h1 class="info-title">${esc(p.name)}</h1>
-        <p class="info-desc">${esc(p.description)}</p>
         ${priceRow}
         <dl class="spec-table">
           <div class="spec-row"><dt>База</dt><dd>${esc(p.base)}</dd></div>
-          <div class="spec-row"><dt>Формат</dt><dd>${esc(p.format)}</dd></div>
           <div class="spec-row"><dt>Номер</dt><dd>UNIT_${projectIndex(p)} · 1/1</dd></div>
-          <div class="spec-row"><dt>Роспись</dt><dd>${p.hours} часов вручную</dd></div>
-          <div class="spec-row"><dt>Финиш</dt><dd>Автолак + полировка</dd></div>
-          <div class="spec-row"><dt>Дата</dt><dd>${formatDate(p.createdAt)}</dd></div>
+          <div class="spec-row"><dt>Часы работы</dt><dd>${p.hours || 0} ч</dd></div>
           ${progressRow}
         </dl>
         <div class="info-actions">
