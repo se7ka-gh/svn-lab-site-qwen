@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "slug": "new-project_001",
+    "name": "COUGAR DUST 2: Underground",
+    "status": "inprogress",
+    "price": 16500,
+    "progress": null,
+    "description": "Описание",
+    "materials": [],
+    "hours": 58,
+    "cover": "/images/projects/new-project-1787652551434.png",
+    "gallery": [],
+    "createdAt": "2026-08-25T09:56:45.932Z",
+    "featured": false,
+    "tags": []
+  }
+]
