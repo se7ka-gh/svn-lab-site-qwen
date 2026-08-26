@@ -1,7 +1,7 @@
 [
   {
     "slug": "001",
-    "name": "COUGAR DUST 2: Underground",
+    "name": "Портфолио временно недоступно ",
     "status": "inprogress",
     "price": 16500,
     "progress": null,
@@ -31,6 +31,7 @@
       "цепи",
       "кибер-готика"
     ],
-    "base": "COUGAR DUST 2"
+    "base": "COUGAR DUST 2",
+    "concept": "COUGAR DUST 2: Underground"
   }
 ]
