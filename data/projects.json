@@ -1,5 +1,28 @@
 [
   {
+    "slug": "0-001",
+    "name": "D-SLAYER",
+    "base": "Prime Box Invader Q4 Black",
+    "status": "forsale",
+    "price": 7747,
+    "progress": 100,
+    "hours": 10,
+    "concept": "Этот корпус представляет собой уникальное сочетание технологий и искусства манги. Черно-белая винилография покрывает панели корпуса, создавая эффект погружения в . Динамичные панели с персонажами и диалогами из манги \"Истребитель демонов\" (Demon Slayer)\nСтеклянная боковая панель позволяет наблюдать за внутренними компонентами, где 4 ARGB вентилятора создают эффектное освещение, контрастирующее с монохромным внешним дизайном.\n\nКраткие характеристики\nФорм-фактор: Mini Tower\nСовместимость: Micro-ATX, Mini-ITX\nДизайн: Виниловая пленка с принтом манги (черно-белая графика)\nОхлаждение: 4 ARGB вентилятора\nБоковая панель: Закаленное стекло\nСтиль: Аниме/манга эстетика",
+    "materials": [
+      "Виниловая пленка"
+    ],
+    "tags": [
+      "Манга",
+      "Аниме",
+      "Винилография"
+    ],
+    "cover": "/images/projects/1787751155480-photo-2026-08-19-00-42-51.png",
+    "gallery": [
+      "/images/projects/1787751155480-photo-2026-08-19-00-42-51.png"
+    ],
+    "featured": false
+  },
+  {
     "slug": "001",
     "name": "COUGAR DUST 2: Underground",
     "status": "forsale",
@@ -17,18 +40,14 @@
       "Автомобильный лак"
     ],
     "hours": 56,
-    "cover": "/images/projects/1787749996734-cougar-detail.png",
+    "cover": "/images/projects/1787749999143-step-finish.png",
     "gallery": [
       "/images/projects/1787749996734-cougar-detail.png",
       "/images/projects/1787749999143-step-finish.png",
       "/images/projects/1787750001176-step-paint.png",
       "/images/projects/1787750003243-step-prep.png",
       "/images/projects/1787750005330-step-sketch.png",
-      "/images/projects/1787750010705-step-teardown.png",
-      "/images/projects/1787750314521-40a139b6-9f3b-4b93-b032-ee51a914c4af.png",
-      "/images/projects/1787750317123-8dcc241b-5940-4309-9b02-7ec823de8951.png",
-      "/images/projects/1787750319478-fcb351d0-0840-4c10-85c8-1abc86ad7838.png",
-      "/images/projects/1787750321838-50699870-7b93-4757-be89-9da37d4c98a4.png"
+      "/images/projects/1787750010705-step-teardown.png"
     ],
     "createdAt": "2026-08-25T09:56:45.932Z",
     "featured": true,
