@@ -597,10 +597,12 @@ ul { list-style: none; }
 }
 .object-media img {
   width: 100%;
-  aspect-ratio: 4 / 5;
   object-fit: cover;
   transition: transform 6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+.object-media img.is-portrait { aspect-ratio: 9 / 16; }
+.object-media img.is-landscape { aspect-ratio: 16 / 9; }
+.object-media img.is-square { aspect-ratio: 1 / 1; }
 .object-frame:hover .object-media img { transform: scale(1.05); }
 .object-media::after {
   content: "";
@@ -820,10 +822,12 @@ ul { list-style: none; }
 }
 .card-media img {
   width: 100%;
-  aspect-ratio: 4 / 3;
   object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s;
 }
+.card-media img.is-portrait { aspect-ratio: 3 / 4; }
+.card-media img.is-landscape { aspect-ratio: 4 / 3; }
+.card-media img.is-square { aspect-ratio: 1 / 1; }
 .card:hover .card-media img { transform: scale(1.05); }
 .card-media .badge { position: absolute; left: 12px; top: 12px; z-index: 2; }
 .card-idx {
@@ -1188,10 +1192,12 @@ ul { list-style: none; }
 }
 .gallery-main img {
   width: 100%;
-  aspect-ratio: 4 / 3;
   object-fit: cover;
   transition: opacity 0.4s;
 }
+.gallery-main img.is-portrait { aspect-ratio: 9 / 16; }
+.gallery-main img.is-landscape { aspect-ratio: 16 / 9; }
+.gallery-main img.is-square { aspect-ratio: 1 / 1; }
 .gallery-main img.contain { object-fit: contain; background: #050505; }
 .gallery-mode {
   position: absolute;
@@ -1236,7 +1242,10 @@ ul { list-style: none; }
   overflow: hidden;
   transition: border-color 0.25s, transform 0.25s;
 }
-.thumb img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; opacity: 0.65; transition: opacity 0.25s; }
+.thumb img { width: 100%; object-fit: cover; opacity: 0.65; transition: opacity 0.25s; }
+.thumb img.is-portrait { aspect-ratio: 3 / 4; }
+.thumb img.is-landscape { aspect-ratio: 4 / 3; }
+.thumb img.is-square { aspect-ratio: 1 / 1; }
 .thumb:hover img { opacity: 1; }
 .thumb:hover { transform: translateY(-2px); }
 .thumb.active { border-color: var(--ember); }
