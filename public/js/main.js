@@ -85,7 +85,7 @@ function projectCard(p, delay = 0) {
   <a class="card reveal" style="--d:${delay}ms" href="#/portfolio/${p.slug}" aria-label="${esc(p.name)} — открыть проект">
     <div class="card-media">
       ${badge(p.status, p.progress)}
-      <img src="${p.cover}" alt="Кастомный корпус ${esc(p.name)}" loading="lazy" />
+      <img src="${p.cover}" alt="Кастомный корпус ${esc(p.name)}" loading="lazy" data-adaptive-ratio />
       <span class="card-idx">UNIT_${projectIndex(p)}</span>
     </div>
     <div class="card-body">
@@ -110,6 +110,9 @@ function pageHome() {
   const flagged = PROJECTS.filter((p) => p.featured);
   const feats = flagged.length ? flagged : PROJECTS.slice(0, 4);
   const hasProjects = feats.length > 0;
+
+  /* hero-проект: первый featured или первый из PROJECTS */
+  const heroProject = flagged[0] || PROJECTS[0] || null;
 
   document.title = "SVN-LAB — Лаборатория кастомных корпусов | svn-lab.ru";
 
@@ -156,20 +159,21 @@ function pageHome() {
       </div>
 
       <div class="hero-right">
+        ${heroProject ? `
         <div class="hero-object reveal r-right" style="--d:.2s">
           <div class="object-frame">
             ${corners()}
             <div class="object-media">
-              <img src="${IMG.hero}" alt="Кастомный корпус COUGAR DUST 2: Knight с ручной росписью" />
+              <img src="${heroProject.cover}" alt="Кастомный корпус ${esc(heroProject.name)}" data-adaptive-ratio />
               <div class="scanline" aria-hidden="true"></div>
             </div>
-            <span class="object-tag">UNIT_01 / KNIGHT</span>
+            <span class="object-tag">UNIT_${projectIndex(heroProject)} / ${esc(heroProject.name.split(":")[0] || heroProject.name)}</span>
             <span class="object-cross" aria-hidden="true"></span>
-            <p class="vertical-note hero-side" aria-hidden="true">Cougar Dust 2 — ручная роспись</p>
+            <p class="vertical-note hero-side" aria-hidden="true">${esc(heroProject.base)} — ${STATUS_META[heroProject.status].label.toLowerCase()}</p>
           </div>
           <div class="object-caption">
-            <span>fig. 01 — объект в продаже</span>
-            <span class="price">${formatPrice(16500)}</span>
+            <span>fig. ${projectIndex(heroProject)} — ${STATUS_META[heroProject.status].label.toLowerCase()}</span>
+            ${heroProject.status === "forsale" && heroProject.price ? `<span class="price">${formatPrice(heroProject.price)}</span>` : ""}
           </div>
           <div class="rot-badge" aria-hidden="true">
             <svg class="ring" viewBox="0 0 100 100">
@@ -181,6 +185,7 @@ function pageHome() {
             <span class="ring-core"></span>
           </div>
         </div>
+        ` : ""}
       </div>
     </div>
 
@@ -439,6 +444,7 @@ function bindPortfolio() {
       grid.innerHTML = list.map((p, i) => projectCard(p, (i % 3) * 70)).join("");
       countEl.textContent = `показано: ${list.length} / ${PROJECTS.length}`;
       initReveals(grid);
+      initAdaptiveRatios(grid);
     });
   });
 }
@@ -464,7 +470,7 @@ function pageProject(slug) {
     <div class="gallery-frame reveal">
       ${corners()}
       <div class="gallery-main">
-        <img id="gallery-img" src="${gallery[0]}" alt="${esc(p.name)} — фото 1" />
+        <img id="gallery-img" src="${gallery[0]}" alt="${esc(p.name)} — фото 1" data-adaptive-ratio />
         <div class="scanline" aria-hidden="true"></div>
         <span class="gallery-counter" id="gallery-counter">01 / ${String(gallery.length).padStart(2, "0")}</span>
         <div class="gallery-mode" role="group" aria-label="Режим просмотра">
@@ -478,7 +484,7 @@ function pageProject(slug) {
         .map(
           (src, i) => `
           <button class="thumb${i === 0 ? " active" : ""}" data-src="${src}" data-i="${i}" aria-label="Фото ${i + 1}">
-            <img src="${src}" alt="" loading="lazy" />
+            <img src="${src}" alt="" loading="lazy" data-adaptive-ratio />
           </button>`
         )
         .join("")}
@@ -579,6 +585,10 @@ function bindProject() {
         img.alt = `${img.alt.split(" — ")[0]} — фото ${Number(t.dataset.i) + 1}`;
         img.style.opacity = "1";
         counter.textContent = `${String(Number(t.dataset.i) + 1).padStart(2, "0")} / ${String($$(".thumb").length).padStart(2, "0")}`;
+        /* сбрасываем и пересчитываем адаптивный ratio */
+        delete img.dataset.ratioApplied;
+        img.classList.remove("is-portrait", "is-landscape", "is-square");
+        initAdaptiveRatios(img.parentElement);
       }, prefersReduced() ? 0 : 180);
     });
   });
@@ -1117,6 +1127,39 @@ function initScrambles(root = document) {
   $$("[data-scramble]", root).forEach(scrambleEl);
 }
 
+/* --- адаптивные рамки для фото --- */
+
+function initAdaptiveRatios(root = document) {
+  $$("[data-adaptive-ratio]", root).forEach((img) => {
+    if (img.dataset.ratioApplied) return;
+    
+    const applyRatio = () => {
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
+      if (!w || !h) return;
+      
+      const ratio = w / h;
+      img.classList.remove("is-portrait", "is-landscape", "is-square");
+      
+      if (ratio > 1.1) {
+        img.classList.add("is-landscape");
+      } else if (ratio < 0.9) {
+        img.classList.add("is-portrait");
+      } else {
+        img.classList.add("is-square");
+      }
+      
+      img.dataset.ratioApplied = "true";
+    };
+    
+    if (img.complete && img.naturalWidth) {
+      applyRatio();
+    } else {
+      img.addEventListener("load", applyRatio, { once: true });
+    }
+  });
+}
+
 /* --- счётчики --- */
 
 function initCounters(root = document) {
@@ -1185,6 +1228,7 @@ function render() {
   initReveals(app);
   initScrambles(app);
   initCounters(app);
+  initAdaptiveRatios(app);
 
   if (route.name === "portfolio") bindPortfolio();
   if (route.name === "project") bindProject();
