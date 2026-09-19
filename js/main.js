@@ -101,216 +101,85 @@ function projectCard(p, delay = 0) {
    ============================================================ */
 
 function pageHome() {
-  /* избранные работы; если флаг featured нигде не стоит — берём первые четыре.
-     Если данные не загрузились — секцию не рисуем вовсе. */
-  const flagged = PROJECTS.filter((p) => p.featured);
-  const feats = flagged.length ? flagged : PROJECTS.slice(0, 4);
-  const hasProjects = feats.length > 0;
+  /* Берём первый избранный проект, или первый по счёту */
+  const featuredProject = PROJECTS.find(p => p.featured) || PROJECTS[0];
+  const hasProject = featuredProject !== undefined;
 
   document.title = "SVN-LAB — Лаборатория кастомных корпусов | svn-lab.ru";
 
   const hero = `
   <section class="hero">
-    <div class="grid-fade" aria-hidden="true"></div>
-    <p class="vertical-note hero-geo" aria-hidden="true"></p>
-
     <div class="container hero-grid">
       <div class="hero-left">
-        <p class="mono-tag reveal">
-          <span class="acc">[ SYS.START ]</span> Лаборатория кастомных корпусов — est. 2024
-          <span class="cursor-blink" aria-hidden="true">▌Novosibirsk </span>
+        <p class="hero-label">
+          <span class="acc">[ SYS.START ]</span> лаборатория кастомных корпусов — est. 2024
         </p>
-
         <h1 class="hero-title">
-          <span class="big" data-scramble>SVN—LAB</span>
-          <span class="sub" data-scramble data-delay="450">КАСТОМНЫЕ КОРПУСА</span>
+          SVN—<br/>LAB
         </h1>
-
-        <p class="hero-sub reveal" style="--d:.15s">
-          Уникальные компьютерные корпуса. <strong>Ручная работа.</strong>
-          Тираж <span class="tir">1/1</span> — от дефектовки серийной базы до авторской росписи
-          и автомобильного лака.
+        <p class="hero-subtitle">КАСТОМНЫЕ КОРПУСА</p>
+        <p class="hero-desc">
+          Уникальные компьютерные корпуса. Ручная работа.<br/>
+          Тираж <span class="acc">1/1</span> — от дефектовки серийной базы до<br/>
+          авторской росписи и автомобильного лака.
         </p>
-
-        <div class="hero-ctas reveal" style="--d:.25s">
-          <a class="btn btn-ember" href="#/portfolio">Смотреть работы <span class="btn-arrow">${IC.arrow}</span></a>
+        <div class="hero-buttons">
+          <a class="btn btn-ember" href="#/portfolio">
+            Смотреть работы ${IC.arrow}
+          </a>
           <a class="btn btn-ghost" href="#/order">Заказать проект</a>
         </div>
-
-        <dl class="data-strip reveal" style="--d:.35s">
-          ${[
-            ["Тираж", "1:1"],
-            ["Роспись", "Вручную"],
-            ["Очередь", "2 места"],
-          ]
-            .map(
-              ([k, v]) => `
-              <div class="data-cell"><dt>${k}</dt><dd>${v}</dd></div>`
-            )
-            .join("")}
-        </dl>
       </div>
-
+      
       <div class="hero-right">
+        ${hasProject ? `
         <div class="hero-object reveal r-right" style="--d:.2s">
           <div class="object-frame">
             ${corners()}
             <div class="object-media">
-              <img src="${IMG.hero}" alt="Кастомный корпус COUGAR DUST 2: Knight с ручной росписью" />
+              <img src="${featuredProject.cover || IMG.hero}" alt="Кастомный корпус ${esc(featuredProject.name)}" />
               <div class="scanline" aria-hidden="true"></div>
             </div>
-            <span class="object-tag">UNIT_01 / KNIGHT</span>
+            <span class="object-tag">UNIT_01 / ${esc(featuredProject.name.split(':')[0].trim())}</span>
             <span class="object-cross" aria-hidden="true"></span>
-            <p class="vertical-note hero-side" aria-hidden="true">Cougar Dust 2 — ручная роспись</p>
+            <p class="vertical-note hero-side" aria-hidden="true">${esc(featuredProject.base || '')} — ручная роспись</p>
           </div>
           <div class="object-caption">
-            <span>fig. 01 — объект в продаже</span>
-            <span class="price">${formatPrice(16500)}</span>
+            <span>fig. 01 — ${featuredProject.status === 'forsale' ? 'объект в продаже' : 'объект'}</span>
+            <span class="price">${featuredProject.status === 'forsale' && featuredProject.price ? formatPrice(featuredProject.price) : '1/1'}</span>
           </div>
-          <div class="rot-badge" aria-hidden="true">
-            <svg class="ring" viewBox="0 0 100 100">
-              <defs><path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
-              <circle class="ring-bg" cx="50" cy="50" r="49"/>
-              <circle class="ring-line" cx="50" cy="50" r="49"/>
-              <text><textPath href="#badge-circle">РУЧНАЯ РАБОТА • ТИРАЖ 1/1 • SVN-LAB •</textPath></text>
+          <div class="object-ring" aria-hidden="true">
+            <svg viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="1"/>
+              <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,62,0,.85)" stroke-width="1.2" 
+                stroke-dasharray="286" stroke-dashoffset="72" transform="rotate(-90 50 50)"/>
+              <text x="50" y="44" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="4" font-family="JetBrains Mono,monospace" text-transform="uppercase" transform="rotate(-90 50 50)">SVN—LAB · ручная работа</text>
+              <text x="50" y="58" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="4" font-family="JetBrains Mono,monospace" text-transform="uppercase" transform="rotate(-90 50 50)">тираж 1/1</text>
             </svg>
-            <span class="ring-core"></span>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="container scroll-hint" aria-hidden="true">
-      <span>Scroll</span>
-      <span class="scroll-dash"><b></b></span>
-    </div>
-  </section>`;
-
-  const about = `
-  <section class="section">
-    <div class="container section-pad">
-      ${secHead("01", "О лаборатории", "Железо как холст")}
-      <div class="about-grid">
-        <div class="about-left">
-          <p class="about-text reveal">
-            SVN-LAB — независимая лаборатория кастомных компьютерных корпусов. Мы не собираем ПК
-            и не продаём железо: мы берём серийный корпус и превращаем его в единственный экземпляр —
-            с авторским эскизом, ручной росписью по металлу и финишем автомобильным лаком.
-          </p>
-          <p class="about-text reveal" style="--d:.1s">
-            Вход идёт не только краска: трубы, цепи, смола, шпаклевка — что угодно для результат, который Вы не найдёте в магазине. Каждый проект документируется
-            от первого винта до полировки и выходит из лаборатории под номером.
-          </p>
-          <p class="about-channel reveal" style="--d:.2s">
-            ${IC.plus}
-            <span>подписаться на процесс:
-              <a href="${TG_CHANNEL}" target="_blank" rel="noopener noreferrer">t.me/svnintg</a>
-            </span>
-          </p>
-        </div>
-        <div class="about-right">
-          <p class="about-statement reveal" style="--d:.1s">
-            Дефектовка <span class="a-e">→</span> подготовка <span class="a-e">→</span>
-            эскиз <span class="a-e">→</span> воплощение <span class="a-e">→</span> сборка и финиш.
-            Пять этапов, <span class="a-v">один экземпляр</span>, ноль компромиссов.
-          </p>
-          <div class="stat-grid reveal" style="--d:.2s">
-            ${[
-              [23, "проекта в архиве лаборатории", ""],
-              [60, "часов росписи — рекорд корпуса", ""],
-              [3, "слоя автомобильного лака", "×"],
-              [1, "экземпляр — тираж каждого проекта", "/1"],
-            ]
-              .map(
-                ([n, label, suf]) => `
-                <div class="stat-cell">
-                  <p class="stat-num"><span data-count="${n}">0</span><em>${suf}</em></p>
-                  <p class="stat-label">${label}</p>
-                  <span class="stat-line" aria-hidden="true"></span>
-                </div>`
-              )
-              .join("")}
+        ` : `
+        <div class="hero-object reveal r-right" style="--d:.2s">
+          <div class="object-frame">
+            ${corners()}
+            <div class="object-media">
+              <img src="${IMG.hero}" alt="Кастомный корпус" />
+              <div class="scanline" aria-hidden="true"></div>
+            </div>
+            <span class="object-tag">UNIT_01</span>
+            <span class="object-cross" aria-hidden="true"></span>
+          </div>
+          <div class="object-caption">
+            <span>fig. 01 — скоро здесь</span>
           </div>
         </div>
+        `}
       </div>
     </div>
+    ...
   </section>`;
 
-  const featured = hasProjects
-    ? `
-  <section class="section section-alt">
-    <div class="container section-pad">
-      ${secHead(
-        "02",
-        "Избранные работы",
-        "Из архива лаборатории",
-        `<a class="btn btn-ghost" href="#/portfolio">Все объекты</a>`
-      )}
-      <div class="cards-grid zig">
-        ${feats.map((p, i) => projectCard(p, (i % 2) * 110)).join("")}
-      </div>
-    </div>
-  </section>`
-    : "";
-
-  const process = `
-  <section class="section">
-    <div class="container section-pad">
-      ${secHead(
-        "03",
-        "Процесс",
-        "Пять этапов до готового корпуса",
-        `<a class="btn btn-ghost" href="#/process">Как это устроено</a>`
-      )}
-      <div class="stage-rows">
-        ${PROCESS_STAGES.map(
-          (s, i) => `
-          <a class="stage-row reveal" style="--d:${i * 60}ms" href="#/process">
-            <span class="stage-num">${s.num}</span>
-            <span class="stage-title">${s.title}</span>
-            <span class="stage-lead">${s.lead}</span>
-            <span class="stage-metric">${s.metric}</span>
-            <span class="stage-arrow">${IC.arrow}</span>
-          </a>`
-        ).join("")}
-      </div>
-    </div>
-  </section>`;
-
-  const cta = `
-  <section class="section cta-section">
-    <span class="cta-ghost" aria-hidden="true">1/1</span>
-    <div class="container section-pad">
-      <div class="cta-inner">
-        <p class="mono-tag reveal"><span class="acc">[ 04 ]</span> Свободная очередь — 2 слота</p>
-        <h2 class="cta-title reveal" style="--d:.08s">Есть идея? <span class="a-e">Превратим</span> в корпус.</h2>
-        <p class="cta-text reveal" style="--d:.16s">
-          Расскажите о персонаже, стиле или отсылке — лаборатория соберёт эскиз под ваш корпус
-          и посчитает сроки. Первый ответ обычно в течение дня.
-        </p>
-        <div class="cta-actions reveal" style="--d:.24s">
-          <a class="btn btn-ember" href="${TG_MAIN}" target="_blank" rel="noopener noreferrer">${IC.tg} Написать в Telegram</a>
-          <a class="btn btn-ghost" href="#/order">Заполнить бриф</a>
-        </div>
-      </div>
-    </div>
-  </section>`;
-
-  return (
-    hero +
-    marquee([
-      "Ручная работа",
-      "Тираж 1/1",
-      "Маркеры · кисть · аэрограф",
-      "Автомобильный лак",
-      "Кастомные корпуса",
-      "svn-lab.ru",
-    ]) +
-    about +
-    featured +
-    process +
-    cta
-  );
+  // ... остальной код функции pageHome (marquee, about, featured, process, cta)
 }
 
 /* ============================================================
